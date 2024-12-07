@@ -12,31 +12,40 @@ import os
 from pathlib import Path
 import logging
 from flask import Flask, jsonify, request, abort
+import pandas as pd
+import numpy as np
 import sklearn
 import pandas as pd
 import joblib
-
-
+import wandb
+import sys
+# Add the parent directory to the system path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import ift6758
 
-
+logger = logging.getLogger(__name__)
 LOG_FILE = os.environ.get("FLASK_LOG", "flask.log")
-
-
+open(LOG_FILE, 'w').close()  # Empty log file from previous application runs
 app = Flask(__name__)
+model = None
 
+# For before_first_request
+def load_default_model():
+    global model
+    model_path = os.path.join(os.path.dirname(__file__), "./models/goal_distance_and_angle_regression.joblib")
+    try:
+        model = joblib.load(model_path)
+    except:
+        print("Error : could not load model at path : " + model_path)
+    logger.info("Loaded default model (goal_distance_and_angle_regression.joblib)")
+    return
 
-@app.before_first_request
-def before_first_request():
-    """
-    Hook to handle any initialization before the first request (e.g. load model,
-    setup logging handler, etc.)
-    """
-    # TODO: setup basic logging configuration
+# Replacement for before_first_request
+with app.app_context():
     logging.basicConfig(filename=LOG_FILE, level=logging.INFO)
-
-    # TODO: any other initialization before the first request (e.g. load default model)
-    pass
+    logger.info('Started before_first_request')
+    load_default_model()  # Default model loaded
+    logger.info('Finished before_first_request')
 
 
 @app.route("/logs", methods=["GET"])
@@ -44,9 +53,14 @@ def logs():
     """Reads data from the log file and returns them as the response"""
     
     # TODO: read the log file specified and return the data
-    raise NotImplementedError("TODO: implement this endpoint")
+    f = open(LOG_FILE, "r")
+    content = f.read()
 
-    response = None
+    response = content.split("\n")
+    if response[-1] == "":
+        clean_repsonse = response[:-1]
+        assert len(clean_repsonse) == len(response) - 1, "Failed removal of last empty element after logs reading"
+        response = clean_repsonse
     return jsonify(response)  # response must be json serializable!
 
 
@@ -55,39 +69,61 @@ def download_registry_model():
     """
     Handles POST requests made to http://IP_ADDRESS:PORT/download_registry_model
 
-    The comet API key should be retrieved from the ${COMET_API_KEY} environment variable.
+    The Wandb API key should be retrieved from the ${WANDB_API_KEY} environment variable. (??? not sure ???)
 
     Recommend (but not required) json with the schema:
 
         {
-            workspace: (required),
+            project: (required),
             model: (required),
             version: (required),
             ... (other fields if needed) ...
         }
     
     """
+    global model
     # Get POST json data
     json = request.get_json()
-    app.logger.info(json)
+    project_name = json[0]["project"]
+    model_name = json[0]["model"]
+    version = json[0]["version"]
+    logger.info("download_registry_model request started")
+    logger.info(json)
 
     # TODO: check to see if the model you are querying for is already downloaded
+    model_path = os.path.join(os.path.dirname(__file__), "./models/" + model_name + ".joblib")
+    already_downloaded = os.path.isfile(model_path)
 
     # TODO: if yes, load that model and write to the log about the model change.  
     # eg: app.logger.info(<LOG STRING>)
+    if already_downloaded:
+        try:
+            model = joblib.load(model_path)
+        except:
+            print(f"Could not load already downloaded model : {model_name}")
+        response = f"Model change to : {model_name} (without download)"
+
     
     # TODO: if no, try downloading the model: if it succeeds, load that model and write to the log
     # about the model change. If it fails, write to the log about the failure and keep the 
     # currently loaded model
+    else:
+        api = wandb.Api()
+        project_path = f"IFT6758-2024-A05/{project_name}"  # Maybe add https://wandb.ai/ before ?
+        artifact_path = f"{project_path}/{model_name}:{version}"
+        try:
+            artifact = api.artifact(artifact_path)
+            model_path = os.path.join(os.path.dirname(__file__), "./models/")
+            artifact.download(model_path)
+            model_path = os.path.join(os.path.dirname(__file__), "./models/" + model_name + ".joblib")
+            model = joblib.load(model_path)
+            response = f"Model change to : {model_name} (with download)"
+        except:
+            print(f"Error, coould not access, download or load the model : {model_name}")
+            response = f"Failure to change model to : {model_name}"
 
-    # Tip: you can implement a "CometMLClient" similar to your App client to abstract all of this
-    # logic and querying of the CometML servers away to keep it clean here
-
-    raise NotImplementedError("TODO: implement this endpoint")
-
-    response = None
-
-    app.logger.info(response)
+    logger.info(response)
+    response = [response]
     return jsonify(response)  # response must be json serializable!
 
 
@@ -100,12 +136,14 @@ def predict():
     """
     # Get POST json data
     json = request.get_json()
-    app.logger.info(json)
-
-    # TODO:
-    raise NotImplementedError("TODO: implement this enpdoint")
+    logger.info("predict request started")
+    logger.info(json)
     
-    response = None
+    df = pd.DataFrame.from_dict(json)
+    X = df.to_numpy()
+    assert np.shape(X)[1] == 1 or np.shape(X)[1] == 2
+    predictions = model.predict_proba(X)
+    response = json.dump(predictions.to_list())
 
-    app.logger.info(response)
+    logger.info(response)
     return jsonify(response)  # response must be json serializable!

@@ -11,7 +11,7 @@ setuptools
 flask
 gunicorn
 scikit-learn
-comet_ml
 jupyterlab
 ipywidgets
 streamlit
+wandb
