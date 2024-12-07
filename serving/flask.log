@@ -1,0 +1,12 @@
+INFO:app:Started before_first_request
+INFO:app:Loaded default model (goal_distance_and_angle_regression.joblib)
+INFO:app:Finished before_first_request
+INFO:app:download_registry_model request started
+INFO:app:[{'project': 'simple_model_logistic_regression', 'model': 'goal_angle_regression', 'version': 'v0'}]
+INFO:app:Model change to goal_angle_regression without download (model is present locally)
+INFO:app:download_registry_model request started
+INFO:app:[{'project': 'simple_model_logistic_regression', 'model': 'imaginary', 'version': 'v4'}]
+INFO:app:Failure to change model to : imaginary
+INFO:app:download_registry_model request started
+INFO:app:[{'project': 'simple_model_logistic_regression', 'model': 'goal_distance_regression', 'version': 'v0'}]
+INFO:app:Model change to : goal_distance_regression with download
