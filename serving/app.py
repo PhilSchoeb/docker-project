@@ -1,7 +1,9 @@
 """
 If you are in the same directory as this file (app.py), you can run run the app using gunicorn:
     
-    $ gunicorn --bind 0.0.0.0:<PORT> app:app
+    $ gunicorn --bind 127.0.0.1:8000 app:app
+    
+You can then access the app logs at : http://127.0.0.1:8000/logs
 
 gunicorn can be installed via:
 
@@ -19,11 +21,11 @@ import pandas as pd
 import joblib
 import wandb
 import sys
+import json
 # Add the parent directory to the system path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import ift6758
 
-logger = logging.getLogger(__name__)
 LOG_FILE = os.environ.get("FLASK_LOG", "flask.log")
 open(LOG_FILE, 'w').close()  # Empty log file from previous application runs
 app = Flask(__name__)
@@ -37,15 +39,15 @@ def load_default_model():
         model = joblib.load(model_path)
     except:
         print("Error : could not load model at path : " + model_path)
-    logger.info("Loaded default model (goal_distance_and_angle_regression.joblib)")
+    app.logger.info("Loaded default model (goal_distance_and_angle_regression.joblib)")
     return
 
 # Replacement for before_first_request
 with app.app_context():
     logging.basicConfig(filename=LOG_FILE, level=logging.INFO)
-    logger.info('Started before_first_request')
+    app.logger.info('Started before_first_request')
     load_default_model()  # Default model loaded
-    logger.info('Finished before_first_request')
+    app.logger.info('Finished before_first_request')
 
 
 @app.route("/logs", methods=["GET"])
@@ -83,12 +85,12 @@ def download_registry_model():
     """
     global model
     # Get POST json data
-    json = request.get_json()
-    project_name = json[0]["project"]
-    model_name = json[0]["model"]
-    version = json[0]["version"]
-    logger.info("download_registry_model request started")
-    logger.info(json)
+    json_input = request.get_json()
+    project_name = json_input[0]["project"]
+    model_name = json_input[0]["model"]
+    version = json_input[0]["version"]
+    app.logger.info("download_registry_model request started")
+    app.logger.info(json_input)
 
     # TODO: check to see if the model you are querying for is already downloaded
     model_path = os.path.join(os.path.dirname(__file__), "./models/" + model_name + ".joblib")
@@ -119,10 +121,10 @@ def download_registry_model():
             model = joblib.load(model_path)
             response = f"Model change to : {model_name} (with download)"
         except:
-            print(f"Error, coould not access, download or load the model : {model_name}")
+            print(f"Error, could not access, download or load the model : {model_name}")
             response = f"Failure to change model to : {model_name}"
 
-    logger.info(response)
+    app.logger.info(response)
     response = [response]
     return jsonify(response)  # response must be json serializable!
 
@@ -135,15 +137,18 @@ def predict():
     Returns predictions
     """
     # Get POST json data
-    json = request.get_json()
-    logger.info("predict request started")
-    logger.info(json)
-    
-    df = pd.DataFrame.from_dict(json)
-    X = df.to_numpy()
-    assert np.shape(X)[1] == 1 or np.shape(X)[1] == 2
-    predictions = model.predict_proba(X)
-    response = json.dump(predictions.to_list())
+    json_input = request.get_json()
+    app.logger.info("predict request started")
+    app.logger.info(json_input)
 
-    logger.info(response)
+    """df = pd.DataFrame.from_dict(json, orient="index")
+    # Reorder columns to match the expected feature names
+    expected_features = model.feature_names_in
+    df = df.reindex(columns=expected_features, fill_value=0)"""
+    
+    df = pd.DataFrame.from_dict(json_input
+    predictions = model.predict_proba(df)
+    response = json.dumps(predictions.tolist())
+
+    app.logger.info(response)
     return jsonify(response)  # response must be json serializable!
