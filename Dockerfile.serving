@@ -42,16 +42,20 @@ WORKDIR /code
 #
 #       CMD <SHELL COMMAND>
 
+# Install requirements
+ADD ./requirements.txt /code/requirements.txt
+RUN pip install -r requirements.txt
 
+# Add and install the package
+ADD ./ift6758 /code/ift6758
+COPY setup.py /code/ift6758/setup.py
+RUN pip install -e /code/ift6758
 
-# TODO: add code, optionally a default model if you want 
+# add api code
+ADD ./serving /code/serving
 
-
-# TODO: install libs
-
-
-# TODO: expose ports (or do this in docker-compose)
-
+EXPOSE 8000
 
 # TODO: specify default command - this is not required because you can always specify the command
 # either with the docker run command or in the docker-compose file
+CMD ["python", "/code/serving/app.py"]

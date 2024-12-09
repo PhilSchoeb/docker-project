@@ -37,8 +37,8 @@ def load_default_model():
     model_path = os.path.join(os.path.dirname(__file__), "./models/goal_distance_and_angle_regression.joblib")
     try:
         model = joblib.load(model_path)
-    except:
-        print("Error : could not load model at path : " + model_path)
+    except Exception as e:
+        print(f"Could not load model at path : {model_path}. Error : {str(e)}")
     app.logger.info("Loaded default model (goal_distance_and_angle_regression.joblib)")
     return
 
