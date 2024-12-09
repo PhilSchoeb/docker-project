@@ -146,7 +146,7 @@ def predict():
     expected_features = model.feature_names_in
     df = df.reindex(columns=expected_features, fill_value=0)"""
     
-    df = pd.DataFrame.from_dict(json_input
+    df = pd.DataFrame.from_dict(json_input)
     predictions = model.predict_proba(df)
     response = json.dumps(predictions.tolist())
 
