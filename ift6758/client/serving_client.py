@@ -13,7 +13,7 @@ class ServingClient:
         logger.info(f"Initializing client; base URL: {self.base_url}")
 
         if features is None:
-            features = ["distance"]
+            features = ["goal_distance"]
         self.features = features
 
         # any other potential initialization
@@ -28,12 +28,39 @@ class ServingClient:
             X (Dataframe): Input dataframe to submit to the prediction service.
         """
 
-        raise NotImplementedError("TODO: implement this function")
+        url = f"{self.base_url}/predict"
+        payload = X.to_dict(orient="records")  # Convert DataFrame to list of dicts
+        
+        try:
+            # Send the POST request
+            response = requests.post(url, json=payload)
+            predictions = json.loads(response.text)  # Parse the stringified JSON response
+            no_goal_prob = [pred[0] for pred in predictions]  # Extract probabilities of no_goal
+            goal_prob = [pred[1] for pred in predictions]  # Extract probabilities that's it's a goal
+            X_with_predictions = X.copy()  # Copy the original DataFrame and add probabilities columns to it
+            X_with_predictions["no_goal_prob"] = no_goal_prob
+            X_with_predictions["goal_prob"] = goal_prob
+            
+            return X_with_predictions
+
+        except requests.exceptions.RequestException as e:
+            logger.error(f"Error in predict: {e}")
+            raise
+
 
     def logs(self) -> dict:
         """Get server logs"""
 
-        raise NotImplementedError("TODO: implement this function")
+        url = f"{self.base_url}/logs"
+    
+        try:
+            response = requests.get(url)
+            logs = response.json()  
+            return logs
+        except requests.exceptions.RequestException as e:
+            logger.error(f"Error in logs: {e}")
+            raise
+
 
     def download_registry_model(self, workspace: str, model: str, version: str) -> dict:
         """
@@ -50,5 +77,19 @@ class ServingClient:
             model (str): The model in the Comet ML registry to download
             version (str): The model version to download
         """
+        
+        url = f"{self.base_url}/download_registry_model"
 
-        raise NotImplementedError("TODO: implement this function")
+        payload = [{
+            "project": workspace,
+            "model": model,
+            "version": version,
+        }]
+
+        try:
+            response = requests.post(url, json=payload)
+            result = response.json()
+            return result
+        except requests.exceptions.RequestException as e:
+            logger.error(f"Error in download_registry_model: {e}")
+            raise

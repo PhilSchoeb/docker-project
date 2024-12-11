@@ -1,18 +1,40 @@
 INFO:app:Started before_first_request
-INFO:app:Loaded default model (goal_distance_and_angle_regression.joblib)
+INFO:app:Loaded default model (goal_distance_regression.joblib)
 INFO:app:Finished before_first_request
-INFO:app:download_registry_model request started
-INFO:app:[{'project': 'simple_model_logistic_regression', 'model': 'imaginary', 'version': 'v4'}]
-INFO:app:Failure to change model to : imaginary
-INFO:app:download_registry_model request started
-INFO:app:[{'project': 'simple_model_logistic_regression', 'model': 'goal_distance_and_angle_regression', 'version': 'v0'}]
-INFO:app:Model change to : goal_distance_and_angle_regression (without download)
 INFO:app:predict request started
-INFO:app:{'goal_distance': {'0': 45.7055795281, '1': 56.5685424949, '2': 15.8113883008, '3': 17.0, '4': 17.1172427686}, 'goal_angle': {'0': 10.0805979875, '1': -8.1301023542, '2': 18.4349488229, '3': -61.9275130641, '4': 6.7098368078}}
-INFO:app:[[0.9427926792793084, 0.0572073207206916], [0.959981414414792, 0.04001858558520797], [0.8558940083811862, 0.14410599161881377], [0.8636778508035483, 0.1363221491964517], [0.8617123581569228, 0.13828764184307718]]
+INFO:app:[{'goal_distance': 45.70557952810576}, {'goal_distance': 56.56854249492381}, {'goal_distance': 15.811388300841896}, {'goal_distance': 17.0}, {'goal_distance': 17.11724276862369}]
+INFO:app:Predictions: [[0.94294274 0.05705726]
+ [0.95986544 0.04013456]
+ [0.85665985 0.14334015]
+ [0.86155457 0.13844543]
+ [0.8620297  0.1379703 ]]
 INFO:app:download_registry_model request started
-INFO:app:[{'project': 'simple_model_logistic_regression', 'model': 'goal_distance_regression', 'version': 'v0'}]
-INFO:app:Model change to : goal_distance_regression (without download)
+INFO:app:[{'project': 'example_project', 'model': 'new_model', 'version': 'v1'}]
+INFO:app:Failure to change model to : new_model
 INFO:app:predict request started
-INFO:app:{'goal_distance': {'0': 45.7055795281, '1': 56.5685424949, '2': 15.8113883008, '3': 17.0, '4': 17.1172427686}}
-INFO:app:[[0.9429427442012093, 0.05705725579879075], [0.9598654423663415, 0.04013455763365843], [0.856659849900769, 0.14334015009923093], [0.8615545718952082, 0.13844542810479182], [0.8620296998381876, 0.1379703001618125]]
+INFO:app:[{'goal_distance': 45.70557952810576}, {'goal_distance': 56.56854249492381}, {'goal_distance': 15.811388300841896}, {'goal_distance': 17.0}, {'goal_distance': 17.11724276862369}]
+INFO:app:Predictions: [[0.94294274 0.05705726]
+ [0.95986544 0.04013456]
+ [0.85665985 0.14334015]
+ [0.86155457 0.13844543]
+ [0.8620297  0.1379703 ]]
+INFO:app:predict request started
+INFO:app:[{'goal_distance': 45.70557952810576}, {'goal_distance': 56.56854249492381}, {'goal_distance': 15.811388300841896}, {'goal_distance': 17.0}, {'goal_distance': 17.11724276862369}]
+INFO:app:Predictions: [[0.94294274 0.05705726]
+ [0.95986544 0.04013456]
+ [0.85665985 0.14334015]
+ [0.86155457 0.13844543]
+ [0.8620297  0.1379703 ]]
+INFO:app:download_registry_model request started
+INFO:app:[{'project': 'example_project', 'model': 'new_model', 'version': 'v1'}]
+INFO:app:Failure to change model to : new_model
+INFO:app:predict request started
+INFO:app:[{'goal_distance': 45.70557952810576}, {'goal_distance': 56.56854249492381}, {'goal_distance': 15.811388300841896}, {'goal_distance': 17.0}, {'goal_distance': 17.11724276862369}]
+INFO:app:Predictions: [[0.94294274 0.05705726]
+ [0.95986544 0.04013456]
+ [0.85665985 0.14334015]
+ [0.86155457 0.13844543]
+ [0.8620297  0.1379703 ]]
+INFO:app:download_registry_model request started
+INFO:app:[{'project': 'simple_model_logistic_regression', 'model': 'goal_angle_regression', 'version': 'v0'}]
+INFO:app:Model change to : goal_angle_regression (without download)
