@@ -59,4 +59,6 @@ EXPOSE 8000
 
 WORKDIR /code/serving
 
-CMD ["gunicorn", "--bind", ":8000", "app:app"]
+# Add timeout configuration to fix issue `[CRITICAL] WORKER TIMEOUT`
+# https://community.render.com/t/worker-timeout-error-how-can-i-fix-it/13671
+CMD ["gunicorn", "--bind", ":8000", "app:app", "-t", "60", "--keep-alive", "60"]
