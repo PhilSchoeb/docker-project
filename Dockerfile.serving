@@ -8,7 +8,7 @@
 
 # https://docs.docker.com/engine/reference/builder/#from
 # You shouldn't need to change this
-FROM python:3.7
+FROM python:3.13
 
 # https://docs.docker.com/engine/reference/builder/#workdir
 # Create and cd into /code as your working directory
@@ -53,9 +53,10 @@ RUN pip install -e /code/ift6758
 
 # add api code
 ADD ./serving /code/serving
+#RUN pip install -e /code/serving
 
 EXPOSE 8000
 
-# TODO: specify default command - this is not required because you can always specify the command
-# either with the docker run command or in the docker-compose file
-CMD ["python", "/code/serving/app.py"]
+WORKDIR /code/serving
+
+CMD ["gunicorn", "--bind", ":8000", "app:app"]
