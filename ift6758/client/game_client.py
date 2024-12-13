@@ -4,12 +4,14 @@ import pandas as pd
 import logging
 import sys 
 import os 
+import time
 
 # Add the parent directory to the path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from data.ApiClient import ApiClient
 from data.DataTransformer import DataTransformer
+from features.preprocess_advanced import preprocess_advanced
 
 
 
@@ -32,25 +34,64 @@ class GameClient:
         self.data_transformer = DataTransformer()
 
 
-    def download_events(self) -> pd.DataFrame:
+def download_live_game_events(self, interval: int = 10):
+    """
+    Continuously download events for a live game, process only new events (flattening of the data and addition of features),
+    and yield updated data as it is collected. Check if new data has been added every chosen time interval (default = 10 seconds.
 
-        '''
+    Returns the updated dataframe with processed events everytime there were new events added.
+    """
 
-        Download events associated with a game based on game_id, transform it into
-        raw data and select for columns of interest.
+    # Fetch initial game state to check if the game is live
+    game_data = self.api_client.get_game_data(self.game_id)
+    is_live = game_data.get("gameState")
 
-        '''
+    if is_live != "ON":
+        print("Game is not live, data will not be collected.")
+        return
 
-        # Download events of a single game as a json
-        game_json = []
-        game_json.append(self.api_client.get_game_data(self.game_id))
+    all_events_data = []  # Collect processed events data frames
+    processed_events = set()  # Tracker for processed event ids
 
-        # Get raw data from json
-        raw_game_data = self.data_transformer.flatten_raw_data_as_dataframe(games = game_json, play_types=None)
+    while is_live == "ON":
+        try:
+            # Fetch current game data
+            game_data = self.api_client.get_game_data(self.game_id)
 
-        game_data = raw_game_data[["game_id","event_idx","is_empty_net","is_goal","goal_distance","goal_angle"]]
+            # Flatten the game data into a DataFrame
+            raw_data = pd.DataFrame(self.data_transformer.flatten_game(game_data, play_types=None))
 
-        print(game_data)
+            # Identify new events that haven't been processed
+            new_events = raw_data[~raw_data["event_idx"].isin(processed_events)]
 
-        return(None)
+            if not new_events.empty:
+                # Add new events features
+                preprocessed_data = preprocess_advanced(new_events)
 
+                # Add the preprocessed data to the collected data
+                all_events_data.append(preprocessed_data)
+
+                # Update the tracker with processed event indices
+                processed_events.update(new_events["event_idx"])
+
+                print(f"Processed {len(new_events)} new events for game {self.game_id} at {time.ctime()}")
+
+                # Returns current data as DataFrame
+                yield pd.concat(all_events_data, ignore_index=True)
+
+            else:
+                print("No new events to process.")
+
+            # Wait for the specified time interval before the next fetch
+            time.sleep(interval)
+
+            # Check if the game is still live
+            game_data = self.api_client.get_game_data(self.game_id)
+            is_live = game_data.get("gameState")
+
+        except Exception as e:
+            print(f"Error while fetching data: {e}")
+            break
+
+    print("Game is no longer live. No further data will be collected.")
+    return
