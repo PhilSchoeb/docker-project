@@ -5,6 +5,9 @@ PORT="8000"
 WANDB_API_KEY="YOUR_WANDB_API_KEY"
 WANDB_ORG="IFT6758-2024-A05"
 
+# Image tag
+TAG="latest"
+
 # Exit on error
 set -e
 
@@ -24,7 +27,7 @@ docker run \
   -e WANDB_API_KEY=${WANDB_API_KEY} \
   -e WANDB_ORG=${WANDB_ORG} \
   --name ift6758-serving \
-  ift6758/serving
+  ift6758/serving:${TAG}
 
 echo -e "${GREEN}Serving the model at http://localhost:${PORT}${NO_COLOR}"
 
