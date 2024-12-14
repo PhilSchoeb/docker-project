@@ -8,7 +8,7 @@
 
 # https://docs.docker.com/engine/reference/builder/#from
 # You shouldn't need to change this
-FROM python:3.7
+FROM python:3.13
 
 # https://docs.docker.com/engine/reference/builder/#workdir
 # Create and cd into /code as your working directory
@@ -42,16 +42,23 @@ WORKDIR /code
 #
 #       CMD <SHELL COMMAND>
 
+# Install requirements
+ADD ./requirements.txt /code/requirements.txt
+RUN pip install -r requirements.txt
 
+# Add and install the package
+ADD ./ift6758 /code/ift6758
+COPY setup.py /code/ift6758/setup.py
+RUN pip install -e /code/ift6758
 
-# TODO: add code, optionally a default model if you want 
+# add api code
+ADD ./serving /code/serving
+#RUN pip install -e /code/serving
 
+EXPOSE 8000
 
-# TODO: install libs
+WORKDIR /code/serving
 
-
-# TODO: expose ports (or do this in docker-compose)
-
-
-# TODO: specify default command - this is not required because you can always specify the command
-# either with the docker run command or in the docker-compose file
+# Add timeout configuration to fix issue `[CRITICAL] WORKER TIMEOUT`
+# https://community.render.com/t/worker-timeout-error-how-can-i-fix-it/13671
+CMD ["gunicorn", "--bind", ":8000", "app:app", "-t", "60", "--keep-alive", "60"]
