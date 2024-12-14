@@ -6,7 +6,7 @@ set -e
 # Container options
 PORT="8000"
 TAG="latest"
-NAME="ift6758-serving"
+NAME_SERVING="ift6758-serving"
 
 # Colors for the terminal
 YELLOW='\033[1;33m'
@@ -21,17 +21,17 @@ if [ -f .env ] ; then
   export $(cat .env | xargs)
 fi
 
-echo -e "${YELLOW}Stop previous docker images (if any)${NO_COLOR}"
-docker stop ${NAME} || true
+echo -e "${YELLOW}Stop previous docker containers (if any)${NO_COLOR}"
+docker stop ${NAME_SERVING} || true
 
-echo -e "${YELLOW}Run the docker images${NO_COLOR}"
+echo -e "${YELLOW}Run the docker containers${NO_COLOR}"
 docker run \
   --rm \
   -d \
   -p ${PORT}:8000 \
   -e WANDB_API_KEY=${WANDB_API_KEY} \
   -e WANDB_ORG=${WANDB_ORG} \
-  --name ${NAME} \
+  --name ${NAME_SERVING} \
   ift6758/serving:${TAG}
 
 echo -e "${GREEN}Serving the model at http://localhost:${PORT}${NO_COLOR}"
