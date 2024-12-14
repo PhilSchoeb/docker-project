@@ -141,14 +141,11 @@ def predict():
     app.logger.info("predict request started")
     app.logger.info(json_input)
 
-    """df = pd.DataFrame.from_dict(json, orient="index")
-    # Reorder columns to match the expected feature names
-    expected_features = model.feature_names_in
-    df = df.reindex(columns=expected_features, fill_value=0)"""
-    
+    # Create a DataFrame from the input
     df = pd.DataFrame.from_dict(json_input)
-    predictions = model.predict_proba(df)
-    response = json.dumps(predictions.tolist())
 
-    app.logger.info(response)
-    return jsonify(response)  # response must be json serializable!
+    # Generate predictions using the model
+    predictions = model.predict_proba(df)
+
+    app.logger.info(f"Predictions: {predictions}")
+    return jsonify(predictions.tolist())  # response must be json serializable!
