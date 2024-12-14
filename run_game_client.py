@@ -11,7 +11,7 @@ required_features = ["goal_distance"]
 
 try:
     # Fetch live game events and process them dynamically
-    for events_df in game_client.download_live_game_events(interval=10):
+    for events_df in game_client.download_live_game_events(interval=10, game_id = "2022030411"):
 
         # Filter only the columns required for prediction
         prediction_data = events_df[required_features]
@@ -19,9 +19,7 @@ try:
         # Make predictions on currently loaded events using the ServingClient
         predictions = serving_client.predict(prediction_data)
         
-        # Output enriched data or save it for further analysis
-        print("Enriched data with predictions:")
-        print(enriched_data.head())
+        print(predictions)
 
 except Exception as e:
     print(f"An error occurred during processing: {e}")
