@@ -11,7 +11,7 @@ required_features = ["goal_distance"]
 
 try:
     # Fetch live game events and process them dynamically
-    for events_df in game_client.download_live_game_events(interval=10, game_id = "2022030411"):
+    for events_df in game_client.download_live_game_events(interval=10, game_id = "2024020477"):
 
         # Filter only the columns required for prediction
         prediction_data = events_df[required_features]

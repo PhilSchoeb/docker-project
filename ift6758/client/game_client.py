@@ -44,13 +44,13 @@ class GameClient:
         game_data = self.api_client.get_game_data(self.game_id)
         is_live = game_data.get("gameState")
 
-        if is_live != "ON":
+        if is_live != "LIVE":
             print("Game is not live, data will not be collected.")
             return
 
         processed_events = set()  # Tracker for processed event ids
 
-        while is_live == "ON":
+        while is_live == "LIVE":
             try:
                 # Fetch current game data
                 game_data = self.api_client.get_game_data(self.game_id)
