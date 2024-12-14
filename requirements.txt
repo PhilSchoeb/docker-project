@@ -10,7 +10,7 @@ plotly
 setuptools
 flask
 gunicorn
-scikit-learn
+scikit-learn==1.5.2
 jupyterlab
 ipywidgets
 streamlit

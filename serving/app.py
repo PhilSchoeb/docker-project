@@ -31,15 +31,18 @@ open(LOG_FILE, 'w').close()  # Empty log file from previous application runs
 app = Flask(__name__)
 model = None
 
+# Wandb configuration
+WANDB_ORG = os.environ.get("WANDB_ORG", "IFT6758-2024-A05")
+
 # For before_first_request
 def load_default_model():
     global model
     model_path = os.path.join(os.path.dirname(__file__), "./models/goal_distance_regression.joblib")
     try:
         model = joblib.load(model_path)
-    except:
-        print("Error : could not load model at path : " + model_path)
-    app.logger.info("Loaded default model (goal_distance_regression.joblib)")
+    except Exception as e:
+        print(f"Could not load model at path : {model_path}. Error : {str(e)}")
+    app.logger.info("Loaded default model (goal_distance_and_angle_regression.joblib)")
     return
 
 # Replacement for before_first_request
@@ -111,7 +114,7 @@ def download_registry_model():
     # currently loaded model
     else:
         api = wandb.Api()
-        project_path = f"IFT6758-2024-A05/{project_name}"  # Maybe add https://wandb.ai/ before ?
+        project_path = f"${WANDB_ORG}/{project_name}"  # Maybe add https://wandb.ai/ before ?
         artifact_path = f"{project_path}/{model_name}:{version}"
         try:
             artifact = api.artifact(artifact_path)
