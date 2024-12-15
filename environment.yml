@@ -1,0 +1,21 @@
+name: ift6758-project
+channels:
+  - conda-forge
+dependencies:
+  - numpy
+  - pandas
+  - matplotlib
+  - seaborn
+  - requests
+  - opencv
+  - tqdm
+  - lxml
+  - plotly
+  - setuptools
+  - flask
+  - gunicorn
+  - scikit-learn==1.5.2
+  - jupyterlab
+  - ipywidgets
+  - streamlit
+  - wandb
