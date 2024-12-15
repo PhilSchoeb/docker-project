@@ -214,6 +214,12 @@ r = requests.post("http://0.0.0.0:<PORT>/predict", json=json.loads(X.to_json()))
 print(r.json())
 ```
 
+Run the app and pass the WandB API key as an environment variable:
+
+```bash
+WANDB_API_KEY=<YOUR_API_KEY> gunicorn --bind 0.0.0.0:8000 app:app
+```
+
 ## Streamlit
 
 Streamlit can be installed using:
