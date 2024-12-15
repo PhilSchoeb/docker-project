@@ -23,7 +23,7 @@ if st.sidebar.button("Get model"):
     try:
         response = requests.post(
             "http://127.0.0.1:8000/download_registry_model",
-            json={"workspace": workspace, "model": model, "version": version}
+            json={"project": workspace, "model": model, "version": version}
         )
         if response.status_code == 200:
             st.sidebar.success("Model downloaded and loaded successfully!")
@@ -72,7 +72,7 @@ if st.button("Ping game"):
             new_events = events_df[~events_df['processed']]
             if not new_events.empty:
                 prediction_response = requests.post(
-                    "http://127.0.0.1:0>/predict",
+                    "http://127.0.0.1:8000/predict",
                     json=json.loads(new_events.to_json(orient="records"))
                 )
                 if prediction_response.status_code == 200:

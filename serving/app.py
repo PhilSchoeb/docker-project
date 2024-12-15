@@ -89,9 +89,10 @@ def download_registry_model():
     global model
     # Get POST json data
     json_input = request.get_json()
-    project_name = json_input[0]["project"]
-    model_name = json_input[0]["model"]
-    version = json_input[0]["version"]
+    print(json_input)
+    project_name = json_input["project"]
+    model_name = json_input["model"]
+    version = json_input["version"]
     app.logger.info("download_registry_model request started")
     app.logger.info(json_input)
 
