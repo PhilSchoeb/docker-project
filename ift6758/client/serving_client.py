@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 
 class ServingClient:
-    def __init__(self, ip: str = "0.0.0.0", port: int = 5000, features=None):
+    def __init__(self, ip: str = "127.0.0.1", port: int = 8000, features=None):
         self.base_url = f"http://{ip}:{port}"
         logger.info(f"Initializing client; base URL: {self.base_url}")
 
@@ -88,8 +88,8 @@ class ServingClient:
 
         try:
             response = requests.post(url, json=payload)
-            result = response.json()
-            return result
+            response.raise_for_status()  # Raise an HTTPError for non-2xx responses
+            return response  # Return the full response object
         except requests.exceptions.RequestException as e:
             logger.error(f"Error in download_registry_model: {e}")
             raise

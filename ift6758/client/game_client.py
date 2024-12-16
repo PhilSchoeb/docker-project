@@ -5,6 +5,7 @@ import logging
 import sys 
 import os 
 import time
+import streamlit as st
 
 # Add the parent directory to the path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -34,10 +35,6 @@ class GameClient:
         Returns the updated dataframe with processed events everytime there were new events added.
         """
 
-        #Check if a game_id was given
-        if not game_id:
-            print("Game ID is required to run this function.")
-            return
         self.game_id = game_id
 
         # Fetch initial game state to check if the game is live
@@ -45,8 +42,10 @@ class GameClient:
         is_live = game_data.get("gameState")
 
         if is_live != "LIVE":
-            print("Game is not live, data will not be collected.")
+            st.error("Game is not live, data will not be used.")
             return
+
+        # is_live = "LIVE" # You can test with games being not live, you just to need to comment out the if statement above
 
         processed_events = set()  # Tracker for processed event ids
 
