@@ -39,8 +39,8 @@ def load_default_model():
     model_path = os.path.join(os.path.dirname(__file__), "./models/goal_distance_regression.joblib")
     try:
         model = joblib.load(model_path)
-    except:
-        print("Error : could not load model at path : " + model_path)
+    except Exception as e:
+        print(f"Could not load model at path : {model_path}. Error : {str(e)}")
     app.logger.info("Loaded default model (goal_distance_regression.joblib)")
     return
 
@@ -103,8 +103,8 @@ def download_registry_model():
     if already_downloaded:
         try:
             model = joblib.load(model_path)
-        except:
-            print(f"Could not load already downloaded model : {model_name}")
+        except Exception as e:
+            print(f"Could not load already downloaded model : {model_name} at path : {model_path}. Error : {str(e)}")
         response = f"Model change to : {model_name} (without download)"
 
     
@@ -122,8 +122,8 @@ def download_registry_model():
             model_path = os.path.join(os.path.dirname(__file__), "./models/" + model_name + ".joblib")
             model = joblib.load(model_path)
             response = f"Model change to : {model_name} (with download)"
-        except:
-            print(f"Error, could not access, download or load the model : {model_name}")
+        except Exception as e:
+            print(f"Error, could not access, download or load the model : {model_name}. Error : {str(e)}")
             response = f"Failure to change model to : {model_name}"
 
     app.logger.info(response)
