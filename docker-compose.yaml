@@ -2,6 +2,7 @@
 version: '3'
 
 services:
+
   serving:
     build:
       context: ./
@@ -12,18 +13,18 @@ services:
     environment:
       WANDB_API_KEY: "${WANDB_API_KEY}"
       WANDB_ORG: "${WANDB_ORG}"
-###### Uncomment below when you're ready to add the final notebook container to your docker compose
-##  streamlit:
-##    build:
-##      context: ./
-##      dockerfile: ./Dockerfile.streamlit
-##      args:
-##        ARG: <ARG>
-##    image: ift6758/streamlit:<TAG>
-##    ports:
-##      - <STREAMLIT_PORT>:<STREAMLIT_PORT>
-##    environment:
-##      OTHER_DOCKER_ENV_VAR = ${OTHER_LOCAL_ENV_VAR}
-      
+
+  streamlit:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile.streamlit
+    image: ift6758/streamlit:latest
+    ports:
+      - "8501:8501"
+    environment:
+      GAME_CLIENT_HOST: "${GAME_CLIENT_HOST}"
+      GAME_CLIENT_PORT: "${GAME_CLIENT_PORT}"
+      SERVING_CLIENT_HOST: "${SERVING_CLIENT_HOST}"
+      SERVING_CLIENT_PORT: "${SERVING_CLIENT_PORT}"
 
      
