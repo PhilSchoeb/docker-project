@@ -1,6 +1,811 @@
-INFO:app:Started before_first_request
-INFO:app:Loaded default model (goal_distance_and_angle_regression.joblib)
-INFO:app:Finished before_first_request
-INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on http://127.0.0.1:5000
-INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:modified_app:Started before_first_request
+INFO:modified_app:Loaded default model (goal_distance_regression.joblib)
+INFO:modified_app:Finished before_first_request
+INFO:modified_app:predict request started
+INFO:modified_app:[{'goal_angle': -14.036243467926484}, {'goal_angle': 34.077195280130745}, {'goal_angle': 43.83086067209259}, {'goal_angle': 12.171458208587428}, {'goal_angle': -21.25050550713322}, {'goal_angle': 38.9275435927923}, {'goal_angle': 6.981057406829834}, {'goal_angle': 43.025065989118026}, {'goal_angle': 48.01278750418334}, {'goal_angle': -34.019349989826466}, {'goal_angle': -25.906507999514382}, {'goal_angle': -35.88213724620421}, {'goal_angle': 51.34019174590991}, {'goal_angle': 36.02737338510361}, {'goal_angle': -10.784297867562561}, {'goal_angle': 38.047042531826094}, {'goal_angle': 55.88552705465875}, {'goal_angle': 0.0}, {'goal_angle': 32.905242922987895}, {'goal_angle': 15.945395900922858}, {'goal_angle': 0.0}, {'goal_angle': -5.492324557127518}, {'goal_angle': -39.685454330055244}, {'goal_angle': 18.434948822922035}, {'goal_angle': -36.86989764584401}, {'goal_angle': -21.54097591853843}, {'goal_angle': 51.63251461513846}, {'goal_angle': -41.18592516570965}, {'goal_angle': 0.0}, {'goal_angle': 38.65980825409008}, {'goal_angle': 97.1250163489018}, {'goal_angle': 7.765166018425354}, {'goal_angle': 66.80140948635182}, {'goal_angle': -43.53119928561418}, {'goal_angle': 14.74356283647072}, {'goal_angle': 32.47119229084849}, {'goal_angle': 46.21887523513129}, {'goal_angle': 33.690067525979785}, {'goal_angle': 14.036243467926484}, {'goal_angle': 10.619655276155106}, {'goal_angle': -31.26373169437743}, {'goal_angle': -12.528807709151492}, {'goal_angle': 41.496468355215555}, {'goal_angle': -11.309932474020227}, {'goal_angle': 71.56505117707799}, {'goal_angle': -23.62937773065681}, {'goal_angle': 0.8184554616890433}, {'goal_angle': 5.710593137499633}, {'goal_angle': -42.87890360333854}, {'goal_angle': -30.65066795705286}, {'goal_angle': -1.0609116902641509}, {'goal_angle': 26.565051177077994}, {'goal_angle': -40.76360520094116}, {'goal_angle': -60.94539590092286}]
+ERROR:modified_app:Exception on /predict [POST]
+Traceback (most recent call last):
+  File "/home/thibault-maumy/miniconda3/envs/milestone3/lib/python3.11/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/thibault-maumy/miniconda3/envs/milestone3/lib/python3.11/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/thibault-maumy/miniconda3/envs/milestone3/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/thibault-maumy/miniconda3/envs/milestone3/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/thibault-maumy/Documents/ift/docker-project/serving/modified_app.py", line 148, in predict
+    predictions = model.predict_proba(df)
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/thibault-maumy/miniconda3/envs/milestone3/lib/python3.11/site-packages/sklearn/linear_model/_logistic.py", line 1431, in predict_proba
+    return super()._predict_proba_lr(X)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/thibault-maumy/miniconda3/envs/milestone3/lib/python3.11/site-packages/sklearn/linear_model/_base.py", line 397, in _predict_proba_lr
+    prob = self.decision_function(X)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/thibault-maumy/miniconda3/envs/milestone3/lib/python3.11/site-packages/sklearn/linear_model/_base.py", line 363, in decision_function
+    X = self._validate_data(X, accept_sparse="csr", reset=False)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/thibault-maumy/miniconda3/envs/milestone3/lib/python3.11/site-packages/sklearn/base.py", line 608, in _validate_data
+    self._check_feature_names(X, reset=reset)
+  File "/home/thibault-maumy/miniconda3/envs/milestone3/lib/python3.11/site-packages/sklearn/base.py", line 535, in _check_feature_names
+    raise ValueError(message)
+ValueError: The feature names should match those that were passed during fit.
+Feature names unseen at fit time:
+- goal_angle
+Feature names seen at fit time, yet now missing:
+- goal_distance
+
+INFO:modified_app:predict request started
+INFO:modified_app:[{'goal_angle': -14.036243467926484}, {'goal_angle': 34.077195280130745}, {'goal_angle': 43.83086067209259}, {'goal_angle': 12.171458208587428}, {'goal_angle': -21.25050550713322}, {'goal_angle': 38.9275435927923}, {'goal_angle': 6.981057406829834}, {'goal_angle': 43.025065989118026}, {'goal_angle': 48.01278750418334}, {'goal_angle': -34.019349989826466}, {'goal_angle': -25.906507999514382}, {'goal_angle': -35.88213724620421}, {'goal_angle': 51.34019174590991}, {'goal_angle': 36.02737338510361}, {'goal_angle': -10.784297867562561}, {'goal_angle': 38.047042531826094}, {'goal_angle': 55.88552705465875}, {'goal_angle': 0.0}, {'goal_angle': 32.905242922987895}, {'goal_angle': 15.945395900922858}, {'goal_angle': 0.0}, {'goal_angle': -5.492324557127518}, {'goal_angle': -39.685454330055244}, {'goal_angle': 18.434948822922035}, {'goal_angle': -36.86989764584401}, {'goal_angle': -21.54097591853843}, {'goal_angle': 51.63251461513846}, {'goal_angle': -41.18592516570965}, {'goal_angle': 0.0}, {'goal_angle': 38.65980825409008}, {'goal_angle': 97.1250163489018}, {'goal_angle': 7.765166018425354}, {'goal_angle': 66.80140948635182}, {'goal_angle': -43.53119928561418}, {'goal_angle': 14.74356283647072}, {'goal_angle': 32.47119229084849}, {'goal_angle': 46.21887523513129}, {'goal_angle': 33.690067525979785}, {'goal_angle': 14.036243467926484}, {'goal_angle': 10.619655276155106}, {'goal_angle': -31.26373169437743}, {'goal_angle': -12.528807709151492}, {'goal_angle': 41.496468355215555}, {'goal_angle': -11.309932474020227}, {'goal_angle': 71.56505117707799}, {'goal_angle': -23.62937773065681}, {'goal_angle': 0.8184554616890433}, {'goal_angle': 5.710593137499633}, {'goal_angle': -42.87890360333854}, {'goal_angle': -30.65066795705286}, {'goal_angle': -1.0609116902641509}, {'goal_angle': 26.565051177077994}, {'goal_angle': -40.76360520094116}, {'goal_angle': -60.94539590092286}]
+ERROR:modified_app:Exception on /predict [POST]
+Traceback (most recent call last):
+  File "/home/thibault-maumy/miniconda3/envs/milestone3/lib/python3.11/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/thibault-maumy/miniconda3/envs/milestone3/lib/python3.11/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/thibault-maumy/miniconda3/envs/milestone3/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/thibault-maumy/miniconda3/envs/milestone3/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/thibault-maumy/Documents/ift/docker-project/serving/modified_app.py", line 148, in predict
+    predictions = model.predict_proba(df)
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/thibault-maumy/miniconda3/envs/milestone3/lib/python3.11/site-packages/sklearn/linear_model/_logistic.py", line 1431, in predict_proba
+    return super()._predict_proba_lr(X)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/thibault-maumy/miniconda3/envs/milestone3/lib/python3.11/site-packages/sklearn/linear_model/_base.py", line 397, in _predict_proba_lr
+    prob = self.decision_function(X)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/thibault-maumy/miniconda3/envs/milestone3/lib/python3.11/site-packages/sklearn/linear_model/_base.py", line 363, in decision_function
+    X = self._validate_data(X, accept_sparse="csr", reset=False)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/thibault-maumy/miniconda3/envs/milestone3/lib/python3.11/site-packages/sklearn/base.py", line 608, in _validate_data
+    self._check_feature_names(X, reset=reset)
+  File "/home/thibault-maumy/miniconda3/envs/milestone3/lib/python3.11/site-packages/sklearn/base.py", line 535, in _check_feature_names
+    raise ValueError(message)
+ValueError: The feature names should match those that were passed during fit.
+Feature names unseen at fit time:
+- goal_angle
+Feature names seen at fit time, yet now missing:
+- goal_distance
+
+INFO:modified_app:predict request started
+INFO:modified_app:[{'goal_distance': 45.70557952810576}, {'goal_distance': 56.56854249492381}, {'goal_distance': 15.811388300841896}, {'goal_distance': 17.0}, {'goal_distance': 17.11724276862369}]
+INFO:modified_app:Predictions: [[0.94294274 0.05705726]
+ [0.95986544 0.04013456]
+ [0.85665985 0.14334015]
+ [0.86155457 0.13844543]
+ [0.8620297  0.1379703 ]]
+INFO:modified_app:predict request started
+INFO:modified_app:[{'goal_distance': 34.20526275297414}, {'goal_distance': 46.861498055439924}, {'goal_distance': 61.84658438426491}, {'goal_distance': 5.0}, {'goal_distance': 3.605551275463989}, {'goal_distance': 4.123105625617661}, {'goal_distance': 31.38470965295043}, {'goal_distance': 24.351591323771842}, {'goal_distance': 54.91812087098393}, {'goal_distance': 8.54400374531753}, {'goal_distance': 36.76955262170047}, {'goal_distance': 32.89376840679705}, {'goal_distance': 37.8549864614954}, {'goal_distance': 38.2099463490856}, {'goal_distance': 25.495097567963924}, {'goal_distance': 6.0}, {'goal_distance': 5.830951894845301}, {'goal_distance': 97.86214794290998}, {'goal_distance': 16.492422502470642}, {'goal_distance': 48.83646178829912}, {'goal_distance': 69.46221994724903}, {'goal_distance': 35.17101079013795}, {'goal_distance': 17.88854381999832}, {'goal_distance': 13.416407864998739}, {'goal_distance': 51.0098029794274}, {'goal_distance': 25.0}, {'goal_distance': 46.57252408878007}, {'goal_distance': 33.301651610693426}, {'goal_distance': 16.1245154965971}, {'goal_distance': 4.242640687119285}, {'goal_distance': 12.206555615733702}, {'goal_distance': 57.0087712549569}, {'goal_distance': 17.029386365926403}, {'goal_distance': 5.656854249492381}, {'goal_distance': 67.53517601961218}, {'goal_distance': 38.27531841800928}, {'goal_distance': 41.23105625617661}, {'goal_distance': 7.280109889280518}, {'goal_distance': 51.0}, {'goal_distance': 34.40930106817051}, {'goal_distance': 32.01562118716424}, {'goal_distance': 36.87817782917155}, {'goal_distance': 43.86342439892262}, {'goal_distance': 8.246211251235321}, {'goal_distance': 18.601075237738275}, {'goal_distance': 53.2634959423431}, {'goal_distance': 31.32091952673165}, {'goal_distance': 8.246211251235321}, {'goal_distance': 46.87216658103186}, {'goal_distance': 38.3275357934736}, {'goal_distance': 16.55294535724685}, {'goal_distance': 18.867962264113206}, {'goal_distance': 8.54400374531753}, {'goal_distance': 34.058772731852805}, {'goal_distance': 36.89173349139343}, {'goal_distance': 24.839484696748443}, {'goal_distance': 16.492422502470642}]
+INFO:modified_app:Predictions: [[0.91786301 0.08213699]
+ [0.94502224 0.05497776]
+ [0.96624005 0.03375995]
+ [0.80533374 0.19466626]
+ [0.7977878  0.2022122 ]
+ [0.80061371 0.19938629]
+ [0.91033175 0.08966825]
+ [0.8887855  0.1112145 ]
+ [0.95764541 0.04235459]
+ [0.82354504 0.17645496]
+ [0.92420545 0.07579455]
+ [0.91443554 0.08556446]
+ [0.92675228 0.07324772]
+ [0.9275679  0.0724321 ]
+ [0.89257352 0.10742648]
+ [0.81061243 0.18938757]
+ [0.80972785 0.19027215]
+ [0.9898446  0.0101554 ]
+ [0.85948175 0.14051825]
+ [0.94841085 0.05158915]
+ [0.97374401 0.02625599]
+ [0.92030649 0.07969351]
+ [0.86512135 0.13487865]
+ [0.84636003 0.15363997]
+ [0.95191122 0.04808878]
+ [0.89094757 0.10905243]
+ [0.94450917 0.05549083]
+ [0.91551517 0.08448483]
+ [0.85796312 0.14203688]
+ [0.80126215 0.19873785]
+ [0.84093058 0.15906942]
+ [0.96043851 0.03956149]
+ [0.86167379 0.13832621]
+ [0.80881354 0.19118646]
+ [0.9720146  0.0279854 ]
+ [0.92771719 0.07228281]
+ [0.93417768 0.06582232]
+ [0.8172087  0.1827913 ]
+ [0.95189595 0.04810405]
+ [0.91838488 0.08161512]
+ [0.91206863 0.08793137]
+ [0.92446394 0.07553606]
+ [0.93947543 0.06052457]
+ [0.82206781 0.17793219]
+ [0.86792527 0.13207473]
+ [0.9553022  0.0446978 ]
+ [0.91015442 0.08984558]
+ [0.82206781 0.17793219]
+ [0.94504109 0.05495891]
+ [0.92783624 0.07216376]
+ [0.85973026 0.14026974]
+ [0.86896272 0.13103728]
+ [0.82354504 0.17645496]
+ [0.91748647 0.08251353]
+ [0.92449614 0.07550386]
+ [0.89041581 0.10958419]
+ [0.85948175 0.14051825]]
+INFO:modified_app:download_registry_model request started
+INFO:modified_app:[{'project': 'simple_model_logistic_regression', 'model': 'goal_angle_regression', 'version': 'v0'}]
+INFO:modified_app:Model change to : goal_angle_regression (without download)
+INFO:modified_app:predict request started
+INFO:modified_app:[{'goal_angle': -14.036243467926484}, {'goal_angle': 34.077195280130745}, {'goal_angle': 43.83086067209259}, {'goal_angle': 12.171458208587428}, {'goal_angle': -21.25050550713322}, {'goal_angle': 38.9275435927923}, {'goal_angle': 6.981057406829834}, {'goal_angle': 43.025065989118026}, {'goal_angle': 48.01278750418334}, {'goal_angle': -34.019349989826466}, {'goal_angle': -25.906507999514382}, {'goal_angle': -35.88213724620421}, {'goal_angle': 51.34019174590991}, {'goal_angle': 36.02737338510361}, {'goal_angle': -10.784297867562561}, {'goal_angle': 38.047042531826094}, {'goal_angle': 55.88552705465875}, {'goal_angle': 0.0}, {'goal_angle': 32.905242922987895}, {'goal_angle': 15.945395900922858}, {'goal_angle': 0.0}, {'goal_angle': -5.492324557127518}, {'goal_angle': -39.685454330055244}, {'goal_angle': 18.434948822922035}, {'goal_angle': -36.86989764584401}, {'goal_angle': -21.54097591853843}, {'goal_angle': 51.63251461513846}, {'goal_angle': -41.18592516570965}, {'goal_angle': 0.0}, {'goal_angle': 38.65980825409008}, {'goal_angle': 97.1250163489018}, {'goal_angle': 7.765166018425354}, {'goal_angle': 66.80140948635182}, {'goal_angle': -43.53119928561418}, {'goal_angle': 14.74356283647072}, {'goal_angle': 32.47119229084849}, {'goal_angle': 46.21887523513129}, {'goal_angle': 33.690067525979785}, {'goal_angle': 14.036243467926484}, {'goal_angle': 10.619655276155106}, {'goal_angle': -31.26373169437743}, {'goal_angle': -12.528807709151492}, {'goal_angle': 41.496468355215555}, {'goal_angle': -11.309932474020227}, {'goal_angle': 71.56505117707799}, {'goal_angle': -23.62937773065681}, {'goal_angle': 0.8184554616890433}, {'goal_angle': 5.710593137499633}, {'goal_angle': -42.87890360333854}, {'goal_angle': -30.65066795705286}, {'goal_angle': -1.0609116902641509}, {'goal_angle': 26.565051177077994}, {'goal_angle': -40.76360520094116}, {'goal_angle': -60.94539590092286}]
+INFO:modified_app:Predictions: [[0.90556984 0.09443016]
+ [0.90668944 0.09331056]
+ [0.90691495 0.09308505]
+ [0.90618118 0.09381882]
+ [0.90540094 0.09459906]
+ [0.90680164 0.09319836]
+ [0.90606039 0.09393961]
+ [0.90689634 0.09310366]
+ [0.90701149 0.09298851]
+ [0.90510131 0.09489869]
+ [0.90529178 0.09470822]
+ [0.90505753 0.09494247]
+ [0.90708824 0.09291176]
+ [0.90673457 0.09326543]
+ [0.90564589 0.09435411]
+ [0.90678128 0.09321872]
+ [0.90719298 0.09280702]
+ [0.9058977  0.0941023 ]
+ [0.90666231 0.09333769]
+ [0.90626892 0.09373108]
+ [0.9058977  0.0941023 ]
+ [0.90576954 0.09423046]
+ [0.90496809 0.09503191]
+ [0.90632676 0.09367324]
+ [0.90503431 0.09496569]
+ [0.90539413 0.09460587]
+ [0.90709498 0.09290502]
+ [0.90493278 0.09506722]
+ [0.9058977  0.0941023 ]
+ [0.90679545 0.09320455]
+ [0.90813852 0.09186148]
+ [0.90607864 0.09392136]
+ [0.90744411 0.09255589]
+ [0.90487756 0.09512244]
+ [0.90624099 0.09375901]
+ [0.90665226 0.09334774]
+ [0.90697009 0.09302991]
+ [0.90668048 0.09331952]
+ [0.90622454 0.09377546]
+ [0.90614508 0.09385492]
+ [0.90516605 0.09483395]
+ [0.9056051  0.0943949 ]
+ [0.90686102 0.09313898]
+ [0.90563361 0.09436639]
+ [0.90755351 0.09244649]
+ [0.90534518 0.09465482]
+ [0.90591679 0.09408321]
+ [0.9060308  0.0939692 ]
+ [0.90489292 0.09510708]
+ [0.90518044 0.09481956]
+ [0.90587296 0.09412704]
+ [0.90651542 0.09348458]
+ [0.90494272 0.09505728]
+ [0.9044667  0.0955333 ]]
+INFO:modified_app:download_registry_model request started
+INFO:modified_app:[{'project': 'simple_model_logistic_regression', 'model': 'goal_angle_regression', 'version': 'v0'}]
+INFO:modified_app:Model change to : goal_angle_regression (without download)
+INFO:modified_app:predict request started
+INFO:modified_app:[{'goal_angle': -14.036243467926484}, {'goal_angle': 34.077195280130745}, {'goal_angle': 43.83086067209259}, {'goal_angle': 12.171458208587428}, {'goal_angle': -21.25050550713322}, {'goal_angle': 38.9275435927923}, {'goal_angle': 6.981057406829834}, {'goal_angle': 43.025065989118026}, {'goal_angle': 48.01278750418334}, {'goal_angle': -34.019349989826466}, {'goal_angle': -25.906507999514382}, {'goal_angle': -35.88213724620421}, {'goal_angle': 51.34019174590991}, {'goal_angle': 36.02737338510361}, {'goal_angle': -10.784297867562561}, {'goal_angle': 38.047042531826094}, {'goal_angle': 55.88552705465875}, {'goal_angle': 0.0}, {'goal_angle': 32.905242922987895}, {'goal_angle': 15.945395900922858}, {'goal_angle': 0.0}, {'goal_angle': -5.492324557127518}, {'goal_angle': -39.685454330055244}, {'goal_angle': 18.434948822922035}, {'goal_angle': -36.86989764584401}, {'goal_angle': -21.54097591853843}, {'goal_angle': 51.63251461513846}, {'goal_angle': -41.18592516570965}, {'goal_angle': 0.0}, {'goal_angle': 38.65980825409008}, {'goal_angle': 97.1250163489018}, {'goal_angle': 7.765166018425354}, {'goal_angle': 66.80140948635182}, {'goal_angle': -43.53119928561418}, {'goal_angle': 14.74356283647072}, {'goal_angle': 32.47119229084849}, {'goal_angle': 46.21887523513129}, {'goal_angle': 33.690067525979785}, {'goal_angle': 14.036243467926484}, {'goal_angle': 10.619655276155106}, {'goal_angle': -31.26373169437743}, {'goal_angle': -12.528807709151492}, {'goal_angle': 41.496468355215555}, {'goal_angle': -11.309932474020227}, {'goal_angle': 71.56505117707799}, {'goal_angle': -23.62937773065681}, {'goal_angle': 0.8184554616890433}, {'goal_angle': 5.710593137499633}, {'goal_angle': -42.87890360333854}, {'goal_angle': -30.65066795705286}, {'goal_angle': -1.0609116902641509}, {'goal_angle': 26.565051177077994}, {'goal_angle': -40.76360520094116}, {'goal_angle': -60.94539590092286}]
+INFO:modified_app:Predictions: [[0.90556984 0.09443016]
+ [0.90668944 0.09331056]
+ [0.90691495 0.09308505]
+ [0.90618118 0.09381882]
+ [0.90540094 0.09459906]
+ [0.90680164 0.09319836]
+ [0.90606039 0.09393961]
+ [0.90689634 0.09310366]
+ [0.90701149 0.09298851]
+ [0.90510131 0.09489869]
+ [0.90529178 0.09470822]
+ [0.90505753 0.09494247]
+ [0.90708824 0.09291176]
+ [0.90673457 0.09326543]
+ [0.90564589 0.09435411]
+ [0.90678128 0.09321872]
+ [0.90719298 0.09280702]
+ [0.9058977  0.0941023 ]
+ [0.90666231 0.09333769]
+ [0.90626892 0.09373108]
+ [0.9058977  0.0941023 ]
+ [0.90576954 0.09423046]
+ [0.90496809 0.09503191]
+ [0.90632676 0.09367324]
+ [0.90503431 0.09496569]
+ [0.90539413 0.09460587]
+ [0.90709498 0.09290502]
+ [0.90493278 0.09506722]
+ [0.9058977  0.0941023 ]
+ [0.90679545 0.09320455]
+ [0.90813852 0.09186148]
+ [0.90607864 0.09392136]
+ [0.90744411 0.09255589]
+ [0.90487756 0.09512244]
+ [0.90624099 0.09375901]
+ [0.90665226 0.09334774]
+ [0.90697009 0.09302991]
+ [0.90668048 0.09331952]
+ [0.90622454 0.09377546]
+ [0.90614508 0.09385492]
+ [0.90516605 0.09483395]
+ [0.9056051  0.0943949 ]
+ [0.90686102 0.09313898]
+ [0.90563361 0.09436639]
+ [0.90755351 0.09244649]
+ [0.90534518 0.09465482]
+ [0.90591679 0.09408321]
+ [0.9060308  0.0939692 ]
+ [0.90489292 0.09510708]
+ [0.90518044 0.09481956]
+ [0.90587296 0.09412704]
+ [0.90651542 0.09348458]
+ [0.90494272 0.09505728]
+ [0.9044667  0.0955333 ]]
+INFO:modified_app:predict request started
+INFO:modified_app:[{'goal_angle': -14.036243467926484}, {'goal_angle': 34.077195280130745}, {'goal_angle': 43.83086067209259}, {'goal_angle': 12.171458208587428}, {'goal_angle': -21.25050550713322}, {'goal_angle': 38.9275435927923}, {'goal_angle': 6.981057406829834}, {'goal_angle': 43.025065989118026}, {'goal_angle': 48.01278750418334}, {'goal_angle': -34.019349989826466}, {'goal_angle': -25.906507999514382}, {'goal_angle': -35.88213724620421}, {'goal_angle': 51.34019174590991}, {'goal_angle': 36.02737338510361}, {'goal_angle': -10.784297867562561}, {'goal_angle': 38.047042531826094}, {'goal_angle': 55.88552705465875}, {'goal_angle': 0.0}, {'goal_angle': 32.905242922987895}, {'goal_angle': 15.945395900922858}, {'goal_angle': 0.0}, {'goal_angle': -5.492324557127518}, {'goal_angle': -39.685454330055244}, {'goal_angle': 18.434948822922035}, {'goal_angle': -36.86989764584401}, {'goal_angle': -21.54097591853843}, {'goal_angle': 51.63251461513846}, {'goal_angle': -41.18592516570965}, {'goal_angle': 0.0}, {'goal_angle': 38.65980825409008}, {'goal_angle': 97.1250163489018}, {'goal_angle': 7.765166018425354}, {'goal_angle': 66.80140948635182}, {'goal_angle': -43.53119928561418}, {'goal_angle': 14.74356283647072}, {'goal_angle': 32.47119229084849}, {'goal_angle': 46.21887523513129}, {'goal_angle': 33.690067525979785}, {'goal_angle': 14.036243467926484}, {'goal_angle': 10.619655276155106}, {'goal_angle': -31.26373169437743}, {'goal_angle': -12.528807709151492}, {'goal_angle': 41.496468355215555}, {'goal_angle': -11.309932474020227}, {'goal_angle': 71.56505117707799}, {'goal_angle': -23.62937773065681}, {'goal_angle': 0.8184554616890433}, {'goal_angle': 5.710593137499633}, {'goal_angle': -42.87890360333854}, {'goal_angle': -30.65066795705286}, {'goal_angle': -1.0609116902641509}, {'goal_angle': 26.565051177077994}, {'goal_angle': -40.76360520094116}, {'goal_angle': -60.94539590092286}]
+INFO:modified_app:Predictions: [[0.90556984 0.09443016]
+ [0.90668944 0.09331056]
+ [0.90691495 0.09308505]
+ [0.90618118 0.09381882]
+ [0.90540094 0.09459906]
+ [0.90680164 0.09319836]
+ [0.90606039 0.09393961]
+ [0.90689634 0.09310366]
+ [0.90701149 0.09298851]
+ [0.90510131 0.09489869]
+ [0.90529178 0.09470822]
+ [0.90505753 0.09494247]
+ [0.90708824 0.09291176]
+ [0.90673457 0.09326543]
+ [0.90564589 0.09435411]
+ [0.90678128 0.09321872]
+ [0.90719298 0.09280702]
+ [0.9058977  0.0941023 ]
+ [0.90666231 0.09333769]
+ [0.90626892 0.09373108]
+ [0.9058977  0.0941023 ]
+ [0.90576954 0.09423046]
+ [0.90496809 0.09503191]
+ [0.90632676 0.09367324]
+ [0.90503431 0.09496569]
+ [0.90539413 0.09460587]
+ [0.90709498 0.09290502]
+ [0.90493278 0.09506722]
+ [0.9058977  0.0941023 ]
+ [0.90679545 0.09320455]
+ [0.90813852 0.09186148]
+ [0.90607864 0.09392136]
+ [0.90744411 0.09255589]
+ [0.90487756 0.09512244]
+ [0.90624099 0.09375901]
+ [0.90665226 0.09334774]
+ [0.90697009 0.09302991]
+ [0.90668048 0.09331952]
+ [0.90622454 0.09377546]
+ [0.90614508 0.09385492]
+ [0.90516605 0.09483395]
+ [0.9056051  0.0943949 ]
+ [0.90686102 0.09313898]
+ [0.90563361 0.09436639]
+ [0.90755351 0.09244649]
+ [0.90534518 0.09465482]
+ [0.90591679 0.09408321]
+ [0.9060308  0.0939692 ]
+ [0.90489292 0.09510708]
+ [0.90518044 0.09481956]
+ [0.90587296 0.09412704]
+ [0.90651542 0.09348458]
+ [0.90494272 0.09505728]
+ [0.9044667  0.0955333 ]]
+INFO:modified_app:predict request started
+INFO:modified_app:[{'goal_angle': -14.036243467926484}, {'goal_angle': 34.077195280130745}, {'goal_angle': 43.83086067209259}, {'goal_angle': 12.171458208587428}, {'goal_angle': -21.25050550713322}, {'goal_angle': 38.9275435927923}, {'goal_angle': 6.981057406829834}, {'goal_angle': 43.025065989118026}, {'goal_angle': 48.01278750418334}, {'goal_angle': -34.019349989826466}, {'goal_angle': -25.906507999514382}, {'goal_angle': -35.88213724620421}, {'goal_angle': 51.34019174590991}, {'goal_angle': 36.02737338510361}, {'goal_angle': -10.784297867562561}, {'goal_angle': 38.047042531826094}, {'goal_angle': 55.88552705465875}, {'goal_angle': 0.0}, {'goal_angle': 32.905242922987895}, {'goal_angle': 15.945395900922858}, {'goal_angle': 0.0}, {'goal_angle': -5.492324557127518}, {'goal_angle': -39.685454330055244}, {'goal_angle': 18.434948822922035}, {'goal_angle': -36.86989764584401}, {'goal_angle': -21.54097591853843}, {'goal_angle': 51.63251461513846}, {'goal_angle': -41.18592516570965}, {'goal_angle': 0.0}, {'goal_angle': 38.65980825409008}, {'goal_angle': 97.1250163489018}, {'goal_angle': 7.765166018425354}, {'goal_angle': 66.80140948635182}, {'goal_angle': -43.53119928561418}, {'goal_angle': 14.74356283647072}, {'goal_angle': 32.47119229084849}, {'goal_angle': 46.21887523513129}, {'goal_angle': 33.690067525979785}, {'goal_angle': 14.036243467926484}, {'goal_angle': 10.619655276155106}, {'goal_angle': -31.26373169437743}, {'goal_angle': -12.528807709151492}, {'goal_angle': 41.496468355215555}, {'goal_angle': -11.309932474020227}, {'goal_angle': 71.56505117707799}, {'goal_angle': -23.62937773065681}, {'goal_angle': 0.8184554616890433}, {'goal_angle': 5.710593137499633}, {'goal_angle': -42.87890360333854}, {'goal_angle': -30.65066795705286}, {'goal_angle': -1.0609116902641509}, {'goal_angle': 26.565051177077994}, {'goal_angle': -40.76360520094116}, {'goal_angle': -60.94539590092286}]
+INFO:modified_app:Predictions: [[0.90556984 0.09443016]
+ [0.90668944 0.09331056]
+ [0.90691495 0.09308505]
+ [0.90618118 0.09381882]
+ [0.90540094 0.09459906]
+ [0.90680164 0.09319836]
+ [0.90606039 0.09393961]
+ [0.90689634 0.09310366]
+ [0.90701149 0.09298851]
+ [0.90510131 0.09489869]
+ [0.90529178 0.09470822]
+ [0.90505753 0.09494247]
+ [0.90708824 0.09291176]
+ [0.90673457 0.09326543]
+ [0.90564589 0.09435411]
+ [0.90678128 0.09321872]
+ [0.90719298 0.09280702]
+ [0.9058977  0.0941023 ]
+ [0.90666231 0.09333769]
+ [0.90626892 0.09373108]
+ [0.9058977  0.0941023 ]
+ [0.90576954 0.09423046]
+ [0.90496809 0.09503191]
+ [0.90632676 0.09367324]
+ [0.90503431 0.09496569]
+ [0.90539413 0.09460587]
+ [0.90709498 0.09290502]
+ [0.90493278 0.09506722]
+ [0.9058977  0.0941023 ]
+ [0.90679545 0.09320455]
+ [0.90813852 0.09186148]
+ [0.90607864 0.09392136]
+ [0.90744411 0.09255589]
+ [0.90487756 0.09512244]
+ [0.90624099 0.09375901]
+ [0.90665226 0.09334774]
+ [0.90697009 0.09302991]
+ [0.90668048 0.09331952]
+ [0.90622454 0.09377546]
+ [0.90614508 0.09385492]
+ [0.90516605 0.09483395]
+ [0.9056051  0.0943949 ]
+ [0.90686102 0.09313898]
+ [0.90563361 0.09436639]
+ [0.90755351 0.09244649]
+ [0.90534518 0.09465482]
+ [0.90591679 0.09408321]
+ [0.9060308  0.0939692 ]
+ [0.90489292 0.09510708]
+ [0.90518044 0.09481956]
+ [0.90587296 0.09412704]
+ [0.90651542 0.09348458]
+ [0.90494272 0.09505728]
+ [0.9044667  0.0955333 ]]
+INFO:modified_app:predict request started
+INFO:modified_app:[{'goal_angle': -14.036243467926484}, {'goal_angle': 34.077195280130745}, {'goal_angle': 43.83086067209259}, {'goal_angle': 12.171458208587428}, {'goal_angle': -21.25050550713322}, {'goal_angle': 38.9275435927923}, {'goal_angle': 6.981057406829834}, {'goal_angle': 43.025065989118026}, {'goal_angle': 48.01278750418334}, {'goal_angle': -34.019349989826466}, {'goal_angle': -25.906507999514382}, {'goal_angle': -35.88213724620421}, {'goal_angle': 51.34019174590991}, {'goal_angle': 36.02737338510361}, {'goal_angle': -10.784297867562561}, {'goal_angle': 38.047042531826094}, {'goal_angle': 55.88552705465875}, {'goal_angle': 0.0}, {'goal_angle': 32.905242922987895}, {'goal_angle': 15.945395900922858}, {'goal_angle': 0.0}, {'goal_angle': -5.492324557127518}, {'goal_angle': -39.685454330055244}, {'goal_angle': 18.434948822922035}, {'goal_angle': -36.86989764584401}, {'goal_angle': -21.54097591853843}, {'goal_angle': 51.63251461513846}, {'goal_angle': -41.18592516570965}, {'goal_angle': 0.0}, {'goal_angle': 38.65980825409008}, {'goal_angle': 97.1250163489018}, {'goal_angle': 7.765166018425354}, {'goal_angle': 66.80140948635182}, {'goal_angle': -43.53119928561418}, {'goal_angle': 14.74356283647072}, {'goal_angle': 32.47119229084849}, {'goal_angle': 46.21887523513129}, {'goal_angle': 33.690067525979785}, {'goal_angle': 14.036243467926484}, {'goal_angle': 10.619655276155106}, {'goal_angle': -31.26373169437743}, {'goal_angle': -12.528807709151492}, {'goal_angle': 41.496468355215555}, {'goal_angle': -11.309932474020227}, {'goal_angle': 71.56505117707799}, {'goal_angle': -23.62937773065681}, {'goal_angle': 0.8184554616890433}, {'goal_angle': 5.710593137499633}, {'goal_angle': -42.87890360333854}, {'goal_angle': -30.65066795705286}, {'goal_angle': -1.0609116902641509}, {'goal_angle': 26.565051177077994}, {'goal_angle': -40.76360520094116}, {'goal_angle': -60.94539590092286}]
+INFO:modified_app:Predictions: [[0.90556984 0.09443016]
+ [0.90668944 0.09331056]
+ [0.90691495 0.09308505]
+ [0.90618118 0.09381882]
+ [0.90540094 0.09459906]
+ [0.90680164 0.09319836]
+ [0.90606039 0.09393961]
+ [0.90689634 0.09310366]
+ [0.90701149 0.09298851]
+ [0.90510131 0.09489869]
+ [0.90529178 0.09470822]
+ [0.90505753 0.09494247]
+ [0.90708824 0.09291176]
+ [0.90673457 0.09326543]
+ [0.90564589 0.09435411]
+ [0.90678128 0.09321872]
+ [0.90719298 0.09280702]
+ [0.9058977  0.0941023 ]
+ [0.90666231 0.09333769]
+ [0.90626892 0.09373108]
+ [0.9058977  0.0941023 ]
+ [0.90576954 0.09423046]
+ [0.90496809 0.09503191]
+ [0.90632676 0.09367324]
+ [0.90503431 0.09496569]
+ [0.90539413 0.09460587]
+ [0.90709498 0.09290502]
+ [0.90493278 0.09506722]
+ [0.9058977  0.0941023 ]
+ [0.90679545 0.09320455]
+ [0.90813852 0.09186148]
+ [0.90607864 0.09392136]
+ [0.90744411 0.09255589]
+ [0.90487756 0.09512244]
+ [0.90624099 0.09375901]
+ [0.90665226 0.09334774]
+ [0.90697009 0.09302991]
+ [0.90668048 0.09331952]
+ [0.90622454 0.09377546]
+ [0.90614508 0.09385492]
+ [0.90516605 0.09483395]
+ [0.9056051  0.0943949 ]
+ [0.90686102 0.09313898]
+ [0.90563361 0.09436639]
+ [0.90755351 0.09244649]
+ [0.90534518 0.09465482]
+ [0.90591679 0.09408321]
+ [0.9060308  0.0939692 ]
+ [0.90489292 0.09510708]
+ [0.90518044 0.09481956]
+ [0.90587296 0.09412704]
+ [0.90651542 0.09348458]
+ [0.90494272 0.09505728]
+ [0.9044667  0.0955333 ]]
+INFO:modified_app:download_registry_model request started
+INFO:modified_app:[{'project': 'simple_model_logistic_regression', 'model': 'goal_distance_model', 'version': 'v0'}]
+INFO:modified_app:Failure to change model to : goal_distance_model
+INFO:modified_app:predict request started
+INFO:modified_app:[{'goal_distance': 8.246211251235321}, {'goal_distance': 41.048751503547585}, {'goal_distance': 34.655446902326915}, {'goal_distance': 52.172789842982326}, {'goal_distance': 96.56603957913983}, {'goal_distance': 33.421549934136806}, {'goal_distance': 49.36598018878993}, {'goal_distance': 20.518284528683193}, {'goal_distance': 13.45362404707371}, {'goal_distance': 48.25971404805462}, {'goal_distance': 38.91015291668744}, {'goal_distance': 58.008620049092706}, {'goal_distance': 6.4031242374328485}, {'goal_distance': 13.601470508735444}, {'goal_distance': 21.37755832643195}, {'goal_distance': 29.206163733020468}, {'goal_distance': 37.44329045369811}, {'goal_distance': 8.0}, {'goal_distance': 20.248456731316587}, {'goal_distance': 7.280109889280518}, {'goal_distance': 10.0}, {'goal_distance': 52.23983154643591}, {'goal_distance': 61.07372593840988}, {'goal_distance': 6.324555320336759}, {'goal_distance': 30.0}, {'goal_distance': 81.70679286326198}, {'goal_distance': 30.610455730027933}, {'goal_distance': 10.63014581273465}, {'goal_distance': 14.0}, {'goal_distance': 6.4031242374328485}, {'goal_distance': 24.186773244895647}, {'goal_distance': 44.40720662234904}, {'goal_distance': 22.847319317591726}, {'goal_distance': 55.17245689653489}, {'goal_distance': 19.6468827043885}, {'goal_distance': 26.076809620810597}, {'goal_distance': 33.24154027718932}, {'goal_distance': 7.211102550927978}, {'goal_distance': 4.123105625617661}, {'goal_distance': 32.55764119219941}, {'goal_distance': 65.5133574166368}, {'goal_distance': 9.219544457292887}, {'goal_distance': 34.713109915419565}, {'goal_distance': 45.89117562233506}, {'goal_distance': 37.94733192202055}, {'goal_distance': 34.92849839314596}, {'goal_distance': 70.00714249274856}, {'goal_distance': 10.04987562112089}, {'goal_distance': 38.2099463490856}, {'goal_distance': 31.38470965295043}, {'goal_distance': 54.00925846556311}, {'goal_distance': 38.01315561749642}, {'goal_distance': 38.28837943815329}, {'goal_distance': 10.295630140987}]
+ERROR:modified_app:Exception on /predict [POST]
+Traceback (most recent call last):
+  File "/home/thibault-maumy/miniconda3/envs/milestone3/lib/python3.11/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/thibault-maumy/miniconda3/envs/milestone3/lib/python3.11/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/thibault-maumy/miniconda3/envs/milestone3/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/thibault-maumy/miniconda3/envs/milestone3/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/thibault-maumy/Documents/ift/docker-project/serving/modified_app.py", line 148, in predict
+    predictions = model.predict_proba(df)
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/thibault-maumy/miniconda3/envs/milestone3/lib/python3.11/site-packages/sklearn/linear_model/_logistic.py", line 1431, in predict_proba
+    return super()._predict_proba_lr(X)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/thibault-maumy/miniconda3/envs/milestone3/lib/python3.11/site-packages/sklearn/linear_model/_base.py", line 397, in _predict_proba_lr
+    prob = self.decision_function(X)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/thibault-maumy/miniconda3/envs/milestone3/lib/python3.11/site-packages/sklearn/linear_model/_base.py", line 363, in decision_function
+    X = self._validate_data(X, accept_sparse="csr", reset=False)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/thibault-maumy/miniconda3/envs/milestone3/lib/python3.11/site-packages/sklearn/base.py", line 608, in _validate_data
+    self._check_feature_names(X, reset=reset)
+  File "/home/thibault-maumy/miniconda3/envs/milestone3/lib/python3.11/site-packages/sklearn/base.py", line 535, in _check_feature_names
+    raise ValueError(message)
+ValueError: The feature names should match those that were passed during fit.
+Feature names unseen at fit time:
+- goal_distance
+Feature names seen at fit time, yet now missing:
+- goal_angle
+
+INFO:modified_app:predict request started
+INFO:modified_app:[{'goal_distance': 8.246211251235321}, {'goal_distance': 41.048751503547585}, {'goal_distance': 34.655446902326915}, {'goal_distance': 52.172789842982326}, {'goal_distance': 96.56603957913983}, {'goal_distance': 33.421549934136806}, {'goal_distance': 49.36598018878993}, {'goal_distance': 20.518284528683193}, {'goal_distance': 13.45362404707371}, {'goal_distance': 48.25971404805462}, {'goal_distance': 38.91015291668744}, {'goal_distance': 58.008620049092706}, {'goal_distance': 6.4031242374328485}, {'goal_distance': 13.601470508735444}, {'goal_distance': 21.37755832643195}, {'goal_distance': 29.206163733020468}, {'goal_distance': 37.44329045369811}, {'goal_distance': 8.0}, {'goal_distance': 20.248456731316587}, {'goal_distance': 7.280109889280518}, {'goal_distance': 10.0}, {'goal_distance': 52.23983154643591}, {'goal_distance': 61.07372593840988}, {'goal_distance': 6.324555320336759}, {'goal_distance': 30.0}, {'goal_distance': 81.70679286326198}, {'goal_distance': 30.610455730027933}, {'goal_distance': 10.63014581273465}, {'goal_distance': 14.0}, {'goal_distance': 6.4031242374328485}, {'goal_distance': 24.186773244895647}, {'goal_distance': 44.40720662234904}, {'goal_distance': 22.847319317591726}, {'goal_distance': 55.17245689653489}, {'goal_distance': 19.6468827043885}, {'goal_distance': 26.076809620810597}, {'goal_distance': 33.24154027718932}, {'goal_distance': 7.211102550927978}, {'goal_distance': 4.123105625617661}, {'goal_distance': 32.55764119219941}, {'goal_distance': 65.5133574166368}, {'goal_distance': 9.219544457292887}, {'goal_distance': 34.713109915419565}, {'goal_distance': 45.89117562233506}, {'goal_distance': 37.94733192202055}, {'goal_distance': 34.92849839314596}, {'goal_distance': 70.00714249274856}, {'goal_distance': 10.04987562112089}, {'goal_distance': 38.2099463490856}, {'goal_distance': 31.38470965295043}, {'goal_distance': 54.00925846556311}, {'goal_distance': 38.01315561749642}, {'goal_distance': 38.28837943815329}, {'goal_distance': 10.295630140987}]
+ERROR:modified_app:Exception on /predict [POST]
+Traceback (most recent call last):
+  File "/home/thibault-maumy/miniconda3/envs/milestone3/lib/python3.11/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/thibault-maumy/miniconda3/envs/milestone3/lib/python3.11/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/thibault-maumy/miniconda3/envs/milestone3/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/thibault-maumy/miniconda3/envs/milestone3/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/thibault-maumy/Documents/ift/docker-project/serving/modified_app.py", line 148, in predict
+    predictions = model.predict_proba(df)
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/thibault-maumy/miniconda3/envs/milestone3/lib/python3.11/site-packages/sklearn/linear_model/_logistic.py", line 1431, in predict_proba
+    return super()._predict_proba_lr(X)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/thibault-maumy/miniconda3/envs/milestone3/lib/python3.11/site-packages/sklearn/linear_model/_base.py", line 397, in _predict_proba_lr
+    prob = self.decision_function(X)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/thibault-maumy/miniconda3/envs/milestone3/lib/python3.11/site-packages/sklearn/linear_model/_base.py", line 363, in decision_function
+    X = self._validate_data(X, accept_sparse="csr", reset=False)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/thibault-maumy/miniconda3/envs/milestone3/lib/python3.11/site-packages/sklearn/base.py", line 608, in _validate_data
+    self._check_feature_names(X, reset=reset)
+  File "/home/thibault-maumy/miniconda3/envs/milestone3/lib/python3.11/site-packages/sklearn/base.py", line 535, in _check_feature_names
+    raise ValueError(message)
+ValueError: The feature names should match those that were passed during fit.
+Feature names unseen at fit time:
+- goal_distance
+Feature names seen at fit time, yet now missing:
+- goal_angle
+
+INFO:modified_app:download_registry_model request started
+INFO:modified_app:[{'project': 'simple_model_logistic_regression', 'model': 'goal_distance_regression', 'version': 'v0'}]
+INFO:modified_app:Model change to : goal_distance_regression (without download)
+INFO:modified_app:predict request started
+INFO:modified_app:[{'goal_distance': 8.246211251235321}, {'goal_distance': 41.048751503547585}, {'goal_distance': 34.655446902326915}, {'goal_distance': 52.172789842982326}, {'goal_distance': 96.56603957913983}, {'goal_distance': 33.421549934136806}, {'goal_distance': 49.36598018878993}, {'goal_distance': 20.518284528683193}, {'goal_distance': 13.45362404707371}, {'goal_distance': 48.25971404805462}, {'goal_distance': 38.91015291668744}, {'goal_distance': 58.008620049092706}, {'goal_distance': 6.4031242374328485}, {'goal_distance': 13.601470508735444}, {'goal_distance': 21.37755832643195}, {'goal_distance': 29.206163733020468}, {'goal_distance': 37.44329045369811}, {'goal_distance': 8.0}, {'goal_distance': 20.248456731316587}, {'goal_distance': 7.280109889280518}, {'goal_distance': 10.0}, {'goal_distance': 52.23983154643591}, {'goal_distance': 61.07372593840988}, {'goal_distance': 6.324555320336759}, {'goal_distance': 30.0}, {'goal_distance': 81.70679286326198}, {'goal_distance': 30.610455730027933}, {'goal_distance': 10.63014581273465}, {'goal_distance': 14.0}, {'goal_distance': 6.4031242374328485}, {'goal_distance': 24.186773244895647}, {'goal_distance': 44.40720662234904}, {'goal_distance': 22.847319317591726}, {'goal_distance': 55.17245689653489}, {'goal_distance': 19.6468827043885}, {'goal_distance': 26.076809620810597}, {'goal_distance': 33.24154027718932}, {'goal_distance': 7.211102550927978}, {'goal_distance': 4.123105625617661}, {'goal_distance': 32.55764119219941}, {'goal_distance': 65.5133574166368}, {'goal_distance': 9.219544457292887}, {'goal_distance': 34.713109915419565}, {'goal_distance': 45.89117562233506}, {'goal_distance': 37.94733192202055}, {'goal_distance': 34.92849839314596}, {'goal_distance': 70.00714249274856}, {'goal_distance': 10.04987562112089}, {'goal_distance': 38.2099463490856}, {'goal_distance': 31.38470965295043}, {'goal_distance': 54.00925846556311}, {'goal_distance': 38.01315561749642}, {'goal_distance': 38.28837943815329}, {'goal_distance': 10.295630140987}]
+INFO:modified_app:Predictions: [[0.82206781 0.17793219]
+ [0.93379524 0.06620476]
+ [0.91901042 0.08098958]
+ [0.95369053 0.04630947]
+ [0.98939159 0.01060841]
+ [0.91583017 0.08416983]
+ [0.94928527 0.05071473]
+ [0.87522506 0.12477494]
+ [0.84652462 0.15347538]
+ [0.94744223 0.05255777]
+ [0.92915232 0.07084768]
+ [0.96171106 0.03828894]
+ [0.81270915 0.18729085]
+ [0.84717703 0.15282297]
+ [0.87838297 0.12161703]
+ [0.90409434 0.09590566]
+ [0.9257957  0.0742043 ]
+ [0.82083915 0.17916085]
+ [0.87421901 0.12578099]
+ [0.8172087  0.1827913 ]
+ [0.83062903 0.16937097]
+ [0.95379117 0.04620883]
+ [0.96537168 0.03462832]
+ [0.81230191 0.18769809]
+ [0.90641087 0.09358913]
+ [0.98253381 0.01746619]
+ [0.90815801 0.09184199]
+ [0.833624   0.166376  ]
+ [0.84892433 0.15107567]
+ [0.81270915 0.18729085]
+ [0.88822998 0.11177002]
+ [0.94051895 0.05948105]
+ [0.88362482 0.11637518]
+ [0.95799502 0.04200498]
+ [0.87195104 0.12804896]
+ [0.89445664 0.10554336]
+ [0.91535684 0.08464316]
+ [0.8168577  0.1831423 ]
+ [0.80061371 0.19938629]
+ [0.91353646 0.08646354]
+ [0.97008132 0.02991868]
+ [0.82686036 0.17313964]
+ [0.91915633 0.08084367]
+ [0.94328154 0.05671846]
+ [0.92696528 0.07303472]
+ [0.91969922 0.08030078]
+ [0.97421389 0.02578611]
+ [0.83086763 0.16913237]
+ [0.9275679  0.0724321 ]
+ [0.91033175 0.08966825]
+ [0.95637324 0.04362676]
+ [0.92711676 0.07288324]
+ [0.92774699 0.07225301]
+ [0.83203941 0.16796059]]
+INFO:modified_app:download_registry_model request started
+INFO:modified_app:[{'project': 'simple_model_logistic_regression', 'model': 'goal_distance_regression', 'version': 'v0'}]
+INFO:modified_app:Model change to : goal_distance_regression (without download)
+INFO:modified_app:predict request started
+INFO:modified_app:[{'goal_distance': 8.246211251235321}, {'goal_distance': 41.048751503547585}, {'goal_distance': 34.655446902326915}, {'goal_distance': 52.172789842982326}, {'goal_distance': 96.56603957913983}, {'goal_distance': 33.421549934136806}, {'goal_distance': 49.36598018878993}, {'goal_distance': 20.518284528683193}, {'goal_distance': 13.45362404707371}, {'goal_distance': 48.25971404805462}, {'goal_distance': 38.91015291668744}, {'goal_distance': 58.008620049092706}, {'goal_distance': 6.4031242374328485}, {'goal_distance': 13.601470508735444}, {'goal_distance': 21.37755832643195}, {'goal_distance': 29.206163733020468}, {'goal_distance': 37.44329045369811}, {'goal_distance': 8.0}, {'goal_distance': 20.248456731316587}, {'goal_distance': 7.280109889280518}, {'goal_distance': 10.0}, {'goal_distance': 52.23983154643591}, {'goal_distance': 61.07372593840988}, {'goal_distance': 6.324555320336759}, {'goal_distance': 30.0}, {'goal_distance': 81.70679286326198}, {'goal_distance': 30.610455730027933}, {'goal_distance': 10.63014581273465}, {'goal_distance': 14.0}, {'goal_distance': 6.4031242374328485}, {'goal_distance': 24.186773244895647}, {'goal_distance': 44.40720662234904}, {'goal_distance': 22.847319317591726}, {'goal_distance': 55.17245689653489}, {'goal_distance': 19.6468827043885}, {'goal_distance': 26.076809620810597}, {'goal_distance': 33.24154027718932}, {'goal_distance': 7.211102550927978}, {'goal_distance': 4.123105625617661}, {'goal_distance': 32.55764119219941}, {'goal_distance': 65.5133574166368}, {'goal_distance': 9.219544457292887}, {'goal_distance': 34.713109915419565}, {'goal_distance': 45.89117562233506}, {'goal_distance': 37.94733192202055}, {'goal_distance': 34.92849839314596}, {'goal_distance': 70.00714249274856}, {'goal_distance': 10.04987562112089}, {'goal_distance': 38.2099463490856}, {'goal_distance': 31.38470965295043}, {'goal_distance': 54.00925846556311}, {'goal_distance': 38.01315561749642}, {'goal_distance': 38.28837943815329}, {'goal_distance': 10.295630140987}]
+INFO:modified_app:Predictions: [[0.82206781 0.17793219]
+ [0.93379524 0.06620476]
+ [0.91901042 0.08098958]
+ [0.95369053 0.04630947]
+ [0.98939159 0.01060841]
+ [0.91583017 0.08416983]
+ [0.94928527 0.05071473]
+ [0.87522506 0.12477494]
+ [0.84652462 0.15347538]
+ [0.94744223 0.05255777]
+ [0.92915232 0.07084768]
+ [0.96171106 0.03828894]
+ [0.81270915 0.18729085]
+ [0.84717703 0.15282297]
+ [0.87838297 0.12161703]
+ [0.90409434 0.09590566]
+ [0.9257957  0.0742043 ]
+ [0.82083915 0.17916085]
+ [0.87421901 0.12578099]
+ [0.8172087  0.1827913 ]
+ [0.83062903 0.16937097]
+ [0.95379117 0.04620883]
+ [0.96537168 0.03462832]
+ [0.81230191 0.18769809]
+ [0.90641087 0.09358913]
+ [0.98253381 0.01746619]
+ [0.90815801 0.09184199]
+ [0.833624   0.166376  ]
+ [0.84892433 0.15107567]
+ [0.81270915 0.18729085]
+ [0.88822998 0.11177002]
+ [0.94051895 0.05948105]
+ [0.88362482 0.11637518]
+ [0.95799502 0.04200498]
+ [0.87195104 0.12804896]
+ [0.89445664 0.10554336]
+ [0.91535684 0.08464316]
+ [0.8168577  0.1831423 ]
+ [0.80061371 0.19938629]
+ [0.91353646 0.08646354]
+ [0.97008132 0.02991868]
+ [0.82686036 0.17313964]
+ [0.91915633 0.08084367]
+ [0.94328154 0.05671846]
+ [0.92696528 0.07303472]
+ [0.91969922 0.08030078]
+ [0.97421389 0.02578611]
+ [0.83086763 0.16913237]
+ [0.9275679  0.0724321 ]
+ [0.91033175 0.08966825]
+ [0.95637324 0.04362676]
+ [0.92711676 0.07288324]
+ [0.92774699 0.07225301]
+ [0.83203941 0.16796059]]
+INFO:modified_app:download_registry_model request started
+INFO:modified_app:[{'project': 'simple_model_logistic_regression', 'model': 'goal_distance_regression', 'version': 'v0'}]
+INFO:modified_app:Model change to : goal_distance_regression (without download)
+INFO:modified_app:download_registry_model request started
+INFO:modified_app:[{'project': 'simple_model_logistic_rssion', 'model': '', 'version': ''}]
+INFO:modified_app:Failure to change model to : 
+INFO:modified_app:download_registry_model request started
+INFO:modified_app:[{'project': 'simple_model_logistic_regression', 'model': 'goal_distance_regression', 'version': 'v0'}]
+INFO:modified_app:Model change to : goal_distance_regression (without download)
+INFO:modified_app:predict request started
+INFO:modified_app:[{'goal_distance': 8.246211251235321}, {'goal_distance': 41.048751503547585}, {'goal_distance': 34.655446902326915}, {'goal_distance': 52.172789842982326}, {'goal_distance': 96.56603957913983}, {'goal_distance': 33.421549934136806}, {'goal_distance': 49.36598018878993}, {'goal_distance': 20.518284528683193}, {'goal_distance': 13.45362404707371}, {'goal_distance': 48.25971404805462}, {'goal_distance': 38.91015291668744}, {'goal_distance': 58.008620049092706}, {'goal_distance': 6.4031242374328485}, {'goal_distance': 13.601470508735444}, {'goal_distance': 21.37755832643195}, {'goal_distance': 29.206163733020468}, {'goal_distance': 37.44329045369811}, {'goal_distance': 8.0}, {'goal_distance': 20.248456731316587}, {'goal_distance': 7.280109889280518}, {'goal_distance': 10.0}, {'goal_distance': 52.23983154643591}, {'goal_distance': 61.07372593840988}, {'goal_distance': 6.324555320336759}, {'goal_distance': 30.0}, {'goal_distance': 81.70679286326198}, {'goal_distance': 30.610455730027933}, {'goal_distance': 10.63014581273465}, {'goal_distance': 14.0}, {'goal_distance': 6.4031242374328485}, {'goal_distance': 24.186773244895647}, {'goal_distance': 44.40720662234904}, {'goal_distance': 22.847319317591726}, {'goal_distance': 55.17245689653489}, {'goal_distance': 19.6468827043885}, {'goal_distance': 26.076809620810597}, {'goal_distance': 33.24154027718932}, {'goal_distance': 7.211102550927978}, {'goal_distance': 4.123105625617661}, {'goal_distance': 32.55764119219941}, {'goal_distance': 65.5133574166368}, {'goal_distance': 9.219544457292887}, {'goal_distance': 34.713109915419565}, {'goal_distance': 45.89117562233506}, {'goal_distance': 37.94733192202055}, {'goal_distance': 34.92849839314596}, {'goal_distance': 70.00714249274856}, {'goal_distance': 10.04987562112089}, {'goal_distance': 38.2099463490856}, {'goal_distance': 31.38470965295043}, {'goal_distance': 54.00925846556311}, {'goal_distance': 38.01315561749642}, {'goal_distance': 38.28837943815329}, {'goal_distance': 10.295630140987}]
+INFO:modified_app:Predictions: [[0.82206781 0.17793219]
+ [0.93379524 0.06620476]
+ [0.91901042 0.08098958]
+ [0.95369053 0.04630947]
+ [0.98939159 0.01060841]
+ [0.91583017 0.08416983]
+ [0.94928527 0.05071473]
+ [0.87522506 0.12477494]
+ [0.84652462 0.15347538]
+ [0.94744223 0.05255777]
+ [0.92915232 0.07084768]
+ [0.96171106 0.03828894]
+ [0.81270915 0.18729085]
+ [0.84717703 0.15282297]
+ [0.87838297 0.12161703]
+ [0.90409434 0.09590566]
+ [0.9257957  0.0742043 ]
+ [0.82083915 0.17916085]
+ [0.87421901 0.12578099]
+ [0.8172087  0.1827913 ]
+ [0.83062903 0.16937097]
+ [0.95379117 0.04620883]
+ [0.96537168 0.03462832]
+ [0.81230191 0.18769809]
+ [0.90641087 0.09358913]
+ [0.98253381 0.01746619]
+ [0.90815801 0.09184199]
+ [0.833624   0.166376  ]
+ [0.84892433 0.15107567]
+ [0.81270915 0.18729085]
+ [0.88822998 0.11177002]
+ [0.94051895 0.05948105]
+ [0.88362482 0.11637518]
+ [0.95799502 0.04200498]
+ [0.87195104 0.12804896]
+ [0.89445664 0.10554336]
+ [0.91535684 0.08464316]
+ [0.8168577  0.1831423 ]
+ [0.80061371 0.19938629]
+ [0.91353646 0.08646354]
+ [0.97008132 0.02991868]
+ [0.82686036 0.17313964]
+ [0.91915633 0.08084367]
+ [0.94328154 0.05671846]
+ [0.92696528 0.07303472]
+ [0.91969922 0.08030078]
+ [0.97421389 0.02578611]
+ [0.83086763 0.16913237]
+ [0.9275679  0.0724321 ]
+ [0.91033175 0.08966825]
+ [0.95637324 0.04362676]
+ [0.92711676 0.07288324]
+ [0.92774699 0.07225301]
+ [0.83203941 0.16796059]]
+INFO:modified_app:download_registry_model request started
+INFO:modified_app:[{'project': 'simple_model_logistic_regression', 'model': 'goal_distance_regression', 'version': 'v0'}]
+INFO:modified_app:Model change to : goal_distance_regression (without download)
+INFO:modified_app:predict request started
+INFO:modified_app:[{'goal_distance': 8.246211251235321}, {'goal_distance': 41.048751503547585}, {'goal_distance': 34.655446902326915}, {'goal_distance': 52.172789842982326}, {'goal_distance': 96.56603957913983}, {'goal_distance': 33.421549934136806}, {'goal_distance': 49.36598018878993}, {'goal_distance': 20.518284528683193}, {'goal_distance': 13.45362404707371}, {'goal_distance': 48.25971404805462}, {'goal_distance': 38.91015291668744}, {'goal_distance': 58.008620049092706}, {'goal_distance': 6.4031242374328485}, {'goal_distance': 13.601470508735444}, {'goal_distance': 21.37755832643195}, {'goal_distance': 29.206163733020468}, {'goal_distance': 37.44329045369811}, {'goal_distance': 8.0}, {'goal_distance': 20.248456731316587}, {'goal_distance': 7.280109889280518}, {'goal_distance': 10.0}, {'goal_distance': 52.23983154643591}, {'goal_distance': 61.07372593840988}, {'goal_distance': 6.324555320336759}, {'goal_distance': 30.0}, {'goal_distance': 81.70679286326198}, {'goal_distance': 30.610455730027933}, {'goal_distance': 10.63014581273465}, {'goal_distance': 14.0}, {'goal_distance': 6.4031242374328485}, {'goal_distance': 24.186773244895647}, {'goal_distance': 44.40720662234904}, {'goal_distance': 22.847319317591726}, {'goal_distance': 55.17245689653489}, {'goal_distance': 19.6468827043885}, {'goal_distance': 26.076809620810597}, {'goal_distance': 33.24154027718932}, {'goal_distance': 7.211102550927978}, {'goal_distance': 4.123105625617661}, {'goal_distance': 32.55764119219941}, {'goal_distance': 65.5133574166368}, {'goal_distance': 9.219544457292887}, {'goal_distance': 34.713109915419565}, {'goal_distance': 45.89117562233506}, {'goal_distance': 37.94733192202055}, {'goal_distance': 34.92849839314596}, {'goal_distance': 70.00714249274856}, {'goal_distance': 10.04987562112089}, {'goal_distance': 38.2099463490856}, {'goal_distance': 31.38470965295043}, {'goal_distance': 54.00925846556311}, {'goal_distance': 38.01315561749642}, {'goal_distance': 38.28837943815329}, {'goal_distance': 10.295630140987}]
+INFO:modified_app:Predictions: [[0.82206781 0.17793219]
+ [0.93379524 0.06620476]
+ [0.91901042 0.08098958]
+ [0.95369053 0.04630947]
+ [0.98939159 0.01060841]
+ [0.91583017 0.08416983]
+ [0.94928527 0.05071473]
+ [0.87522506 0.12477494]
+ [0.84652462 0.15347538]
+ [0.94744223 0.05255777]
+ [0.92915232 0.07084768]
+ [0.96171106 0.03828894]
+ [0.81270915 0.18729085]
+ [0.84717703 0.15282297]
+ [0.87838297 0.12161703]
+ [0.90409434 0.09590566]
+ [0.9257957  0.0742043 ]
+ [0.82083915 0.17916085]
+ [0.87421901 0.12578099]
+ [0.8172087  0.1827913 ]
+ [0.83062903 0.16937097]
+ [0.95379117 0.04620883]
+ [0.96537168 0.03462832]
+ [0.81230191 0.18769809]
+ [0.90641087 0.09358913]
+ [0.98253381 0.01746619]
+ [0.90815801 0.09184199]
+ [0.833624   0.166376  ]
+ [0.84892433 0.15107567]
+ [0.81270915 0.18729085]
+ [0.88822998 0.11177002]
+ [0.94051895 0.05948105]
+ [0.88362482 0.11637518]
+ [0.95799502 0.04200498]
+ [0.87195104 0.12804896]
+ [0.89445664 0.10554336]
+ [0.91535684 0.08464316]
+ [0.8168577  0.1831423 ]
+ [0.80061371 0.19938629]
+ [0.91353646 0.08646354]
+ [0.97008132 0.02991868]
+ [0.82686036 0.17313964]
+ [0.91915633 0.08084367]
+ [0.94328154 0.05671846]
+ [0.92696528 0.07303472]
+ [0.91969922 0.08030078]
+ [0.97421389 0.02578611]
+ [0.83086763 0.16913237]
+ [0.9275679  0.0724321 ]
+ [0.91033175 0.08966825]
+ [0.95637324 0.04362676]
+ [0.92711676 0.07288324]
+ [0.92774699 0.07225301]
+ [0.83203941 0.16796059]]
+INFO:modified_app:download_registry_model request started
+INFO:modified_app:[{'project': 'simple_model_logistic_regression', 'model': 'goal_distance_regression', 'version': 'v0'}]
+INFO:modified_app:Model change to : goal_distance_regression (without download)
+INFO:modified_app:predict request started
+INFO:modified_app:[{'goal_distance': 8.246211251235321}, {'goal_distance': 41.048751503547585}, {'goal_distance': 34.655446902326915}, {'goal_distance': 52.172789842982326}, {'goal_distance': 96.56603957913983}, {'goal_distance': 33.421549934136806}, {'goal_distance': 49.36598018878993}, {'goal_distance': 20.518284528683193}, {'goal_distance': 13.45362404707371}, {'goal_distance': 48.25971404805462}, {'goal_distance': 38.91015291668744}, {'goal_distance': 58.008620049092706}, {'goal_distance': 6.4031242374328485}, {'goal_distance': 13.601470508735444}, {'goal_distance': 21.37755832643195}, {'goal_distance': 29.206163733020468}, {'goal_distance': 37.44329045369811}, {'goal_distance': 8.0}, {'goal_distance': 20.248456731316587}, {'goal_distance': 7.280109889280518}, {'goal_distance': 10.0}, {'goal_distance': 52.23983154643591}, {'goal_distance': 61.07372593840988}, {'goal_distance': 6.324555320336759}, {'goal_distance': 30.0}, {'goal_distance': 81.70679286326198}, {'goal_distance': 30.610455730027933}, {'goal_distance': 10.63014581273465}, {'goal_distance': 14.0}, {'goal_distance': 6.4031242374328485}, {'goal_distance': 24.186773244895647}, {'goal_distance': 44.40720662234904}, {'goal_distance': 22.847319317591726}, {'goal_distance': 55.17245689653489}, {'goal_distance': 19.6468827043885}, {'goal_distance': 26.076809620810597}, {'goal_distance': 33.24154027718932}, {'goal_distance': 7.211102550927978}, {'goal_distance': 4.123105625617661}, {'goal_distance': 32.55764119219941}, {'goal_distance': 65.5133574166368}, {'goal_distance': 9.219544457292887}, {'goal_distance': 34.713109915419565}, {'goal_distance': 45.89117562233506}, {'goal_distance': 37.94733192202055}, {'goal_distance': 34.92849839314596}, {'goal_distance': 70.00714249274856}, {'goal_distance': 10.04987562112089}, {'goal_distance': 38.2099463490856}, {'goal_distance': 31.38470965295043}, {'goal_distance': 54.00925846556311}, {'goal_distance': 38.01315561749642}, {'goal_distance': 38.28837943815329}, {'goal_distance': 10.295630140987}]
+INFO:modified_app:Predictions: [[0.82206781 0.17793219]
+ [0.93379524 0.06620476]
+ [0.91901042 0.08098958]
+ [0.95369053 0.04630947]
+ [0.98939159 0.01060841]
+ [0.91583017 0.08416983]
+ [0.94928527 0.05071473]
+ [0.87522506 0.12477494]
+ [0.84652462 0.15347538]
+ [0.94744223 0.05255777]
+ [0.92915232 0.07084768]
+ [0.96171106 0.03828894]
+ [0.81270915 0.18729085]
+ [0.84717703 0.15282297]
+ [0.87838297 0.12161703]
+ [0.90409434 0.09590566]
+ [0.9257957  0.0742043 ]
+ [0.82083915 0.17916085]
+ [0.87421901 0.12578099]
+ [0.8172087  0.1827913 ]
+ [0.83062903 0.16937097]
+ [0.95379117 0.04620883]
+ [0.96537168 0.03462832]
+ [0.81230191 0.18769809]
+ [0.90641087 0.09358913]
+ [0.98253381 0.01746619]
+ [0.90815801 0.09184199]
+ [0.833624   0.166376  ]
+ [0.84892433 0.15107567]
+ [0.81270915 0.18729085]
+ [0.88822998 0.11177002]
+ [0.94051895 0.05948105]
+ [0.88362482 0.11637518]
+ [0.95799502 0.04200498]
+ [0.87195104 0.12804896]
+ [0.89445664 0.10554336]
+ [0.91535684 0.08464316]
+ [0.8168577  0.1831423 ]
+ [0.80061371 0.19938629]
+ [0.91353646 0.08646354]
+ [0.97008132 0.02991868]
+ [0.82686036 0.17313964]
+ [0.91915633 0.08084367]
+ [0.94328154 0.05671846]
+ [0.92696528 0.07303472]
+ [0.91969922 0.08030078]
+ [0.97421389 0.02578611]
+ [0.83086763 0.16913237]
+ [0.9275679  0.0724321 ]
+ [0.91033175 0.08966825]
+ [0.95637324 0.04362676]
+ [0.92711676 0.07288324]
+ [0.92774699 0.07225301]
+ [0.83203941 0.16796059]]

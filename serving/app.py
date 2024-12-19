@@ -31,18 +31,15 @@ open(LOG_FILE, 'w').close()  # Empty log file from previous application runs
 app = Flask(__name__)
 model = None
 
-# Wandb configuration
-WANDB_ORG = os.environ.get("WANDB_ORG", "IFT6758-2024-A05")
-
 # For before_first_request
 def load_default_model():
     global model
     model_path = os.path.join(os.path.dirname(__file__), "./models/goal_distance_regression.joblib")
     try:
         model = joblib.load(model_path)
-    except Exception as e:
-        print(f"Could not load model at path : {model_path}. Error : {str(e)}")
-    app.logger.info("Loaded default model (goal_distance_and_angle_regression.joblib)")
+    except:
+        print("Error : could not load model at path : " + model_path)
+    app.logger.info("Loaded default model (goal_distance_regression.joblib)")
     return
 
 # Replacement for before_first_request
@@ -89,10 +86,9 @@ def download_registry_model():
     global model
     # Get POST json data
     json_input = request.get_json()
-    print(json_input)
-    project_name = json_input["project"]
-    model_name = json_input["model"]
-    version = json_input["version"]
+    project_name = json_input[0]["project"]
+    model_name = json_input[0]["model"]
+    version = json_input[0]["version"]
     app.logger.info("download_registry_model request started")
     app.logger.info(json_input)
 
@@ -115,7 +111,7 @@ def download_registry_model():
     # currently loaded model
     else:
         api = wandb.Api()
-        project_path = f"${WANDB_ORG}/{project_name}"  # Maybe add https://wandb.ai/ before ?
+        project_path = f"IFT6758-2024-A05/{project_name}"  # Maybe add https://wandb.ai/ before ?
         artifact_path = f"{project_path}/{model_name}:{version}"
         try:
             artifact = api.artifact(artifact_path)
@@ -145,14 +141,11 @@ def predict():
     app.logger.info("predict request started")
     app.logger.info(json_input)
 
-    """df = pd.DataFrame.from_dict(json, orient="index")
-    # Reorder columns to match the expected feature names
-    expected_features = model.feature_names_in
-    df = df.reindex(columns=expected_features, fill_value=0)"""
-    
+    # Create a DataFrame from the input
     df = pd.DataFrame.from_dict(json_input)
-    predictions = model.predict_proba(df)
-    response = json.dumps(predictions.tolist())
 
-    app.logger.info(response)
-    return jsonify(response)  # response must be json serializable!
+    # Generate predictions using the model
+    predictions = model.predict_proba(df)
+
+    app.logger.info(f"Predictions: {predictions}")
+    return jsonify(predictions.tolist())  # response must be json serializable!

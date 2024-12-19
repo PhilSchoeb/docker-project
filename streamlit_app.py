@@ -3,7 +3,15 @@ import pandas as pd
 import requests
 import json
 import wandb
+import time
+import threading
 import plotly.express as px
+from ift6758.client.serving_client import ServingClient
+from ift6758.client.game_client import GameClient
+
+# Initialize serving and game clients
+game_client = GameClient(ip="127.0.0.1", port=8000)
+serving_client = ServingClient(ip="127.0.0.1", port=8000)
 
 # config streamlit
 st.set_page_config(
@@ -14,92 +22,104 @@ st.title("Hockey Visualization App")
 
 # init de WandB
 st.sidebar.header("WandB Configuration")
-workspace = st.sidebar.text_input("Workspace", placeholder="Enter WandB workspace name")
-model = st.sidebar.text_input("Model", placeholder="Enter model name")
-version = st.sidebar.text_input("Version", placeholder="Enter model version")
+workspace = st.sidebar.text_input("Workspace", value = "simple_model_logistic_regression", placeholder="Enter WandB workspace name")
+model = st.sidebar.text_input("Model", value = "goal_distance_regression", placeholder="Enter model name")
+version = st.sidebar.text_input("Version", value = "v0", placeholder="Enter model version")
 
-# télécharger le modèle via WandB
+# Button to load model
 if st.sidebar.button("Get model"):
     try:
-        response = requests.post(
-            "http://127.0.0.1:8000/download_registry_model",
-            json={"project": workspace, "model": model, "version": version}
-        )
-        if response.status_code == 200:
-            st.sidebar.success("Model downloaded and loaded successfully!")
-            st.sidebar.write(f"Loaded model: {model} from workspace: {workspace}, version: {version}")
-        else:
-            st.sidebar.error(f"Failed to download the model. Error: {response.json().get('error', 'Unknown error')}")
+        response = serving_client.download_registry_model(workspace, model, version)
+        st.sidebar.write(response.json())
     except Exception as e:
         st.sidebar.error(f"An error occurred: {e}")
 
 # ID du match
 game_id = st.text_input("Game ID", placeholder="Enter Game ID (e.g., 2021020329)")
 
+if model == "goal_angle_regression":
+    required_features = ["goal_angle"]
+elif model == "goal_distance_regression":
+    required_features = ["goal_distance"]
+elif model == "goal_distance_and_angle_regression":
+    required_features = ["goal_distance","goal_angle"]
+
+# Button to ping game and fetch live game data
 if st.button("Ping game"):
+
     try:
-        # API pour recup les données du match
-        response = requests.get(f"http://127.0.0.1:8000/game_data/{game_id}")
-        if response.status_code == 200:
-            game_data = response.json()
 
-            home_team = game_data['teams']['home']
-            away_team = game_data['teams']['away']
-            period = game_data['period']
-            time_left = game_data['time_left']
-            score = game_data['score']
-            xg = game_data['xG']
+        game_data = game_client.download_live_game_information(game_id = game_id)
 
-            st.subheader(f"Game {game_id}: {home_team} vs {away_team}")
-            st.write(f"**Period**: {period} - **Time Left**: {time_left}")
+        home_team = game_data['home_team']
+        away_team = game_data['away_team']
 
-            col1, col2 = st.columns(2)
-            col1.metric(
-                f"{home_team} xG (actual)",
-                value=f"{xg['home']} ({score['home']})",
-                delta=round(xg['home'] - score['home'], 2)
-            )
-            col2.metric(
-                f"{away_team} xG (actual)",
-                value=f"{xg['away']} ({score['away']})",
-                delta=round(xg['away'] - score['away'], 2)
-            )
+        st.subheader(f"Game {game_id}: {home_team} vs {away_team}")
 
-            events_df = pd.DataFrame(game_data["events"])
-            st.subheader("Data used for predictions (and predictions)")
-            st.dataframe(events_df)
+        # Placeholder for the timer
+        timer_placeholder = st.empty()
+        
+        # Create placeholders for the xG metrics
+        col1, col2 = st.columns(2)
+        xg_home_placeholder = col1.empty()
+        xg_away_placeholder = col2.empty()
 
-            new_events = events_df[~events_df['processed']]
-            if not new_events.empty:
-                prediction_response = requests.post(
-                    "http://127.0.0.1:8000/predict",
-                    json=json.loads(new_events.to_json(orient="records"))
+        st.subheader("Data used for predictions and associated predictions")
+
+        # Placeholder for the events dataframe 
+        events_placeholder = st.empty()
+
+        # Initialize an empty dataframe to collect all data
+        all_data = pd.DataFrame() 
+
+        # Fetch live game events and process them dynamically
+        for events_data in game_client.download_live_game_events(game_id = game_id, features = required_features):
+
+            events_df = events_data['new_events']
+
+            # Access the time and period data
+            time_left = events_data['live_data']['time']
+            period = events_data['live_data']['period']
+            home_score = events_data['live_data']['home_score']
+            away_score = events_data['live_data']['away_score']
+            xG_home = events_data['live_data']['xG_away']
+            xG_away = events_data['live_data']['xG_away']
+
+            if events_df is not None:
+                # Display columns of interest
+                # prediction_data = events_df[required_features]
+
+                # Update displayed dataframe
+                all_data = pd.concat([all_data, events_df], ignore_index=True)
+
+
+            # Update the dataframe dynamically
+            with events_placeholder.container():
+                st.dataframe(all_data)
+
+            # Update the scores and xG dynamically 
+            with xg_home_placeholder.container():
+                xg_home_placeholder.metric(
+                    label=f"{home_team} xG (actual)",
+                    value=f"{xG_home} ({home_score})",
+                    delta=round(xG_home - home_score, 2)  
                 )
-                if prediction_response.status_code == 200:
-                    predictions_df = pd.DataFrame(prediction_response.json())
-                    predictions_df["Model output"] = predictions_df["xG"]
-                    st.write("Predictions:")
-                    st.dataframe(predictions_df)
+                
+            with xg_away_placeholder.container():
+                xg_away_placeholder.metric(
+                    label=f"{away_team} xG (actual)",
+                    value=f"{xG_away} ({away_score})",
+                    delta=round(xG_away - away_score, 2) 
+                )
 
-                    # save les preds dans WandB
-                    run = wandb.init(project="hockey-xg", name=f"predictions_game_{game_id}", reinit=True)
-                    table = wandb.Table(dataframe=predictions_df)
-                    run.log({"predictions": table})
-                    run.finish()
-                    st.success("Predictions logged to WandB successfully!")
-                else:
-                    st.error("Prediction service failed.")
-            else:
-                st.info("No new events to process.")
-        else:
-            st.error(f"Failed to fetch game data. Error: {response.status_code}")
+            # Update timer and period dynamically
+            with timer_placeholder.container():
+                minutes, seconds = divmod(time_left, 60)
+                formatted_time = f"{minutes:02d}:{seconds:02d}"
+                st.write(f"Period: {period} - {formatted_time}  left: ")
+
+            time.sleep(1)
+
+
     except Exception as e:
         st.error(f"An error occurred: {e}")
-
-# visualisation graphique (bonus)
-if "game_data" in locals() and game_data:
-    try:
-        fig = px.line(events_df, x="time", y="xG", color="team", title="Expected Goals Over Time")
-        st.plotly_chart(fig)
-    except Exception as e:
-        st.error(f"Failed to generate visualization: {e}")
