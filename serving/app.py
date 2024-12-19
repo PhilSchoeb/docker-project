@@ -26,6 +26,8 @@ import json
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import ift6758
 
+# Wandb configuration
+WANDB_ORG = os.environ.get("WANDB_ORG", "IFT6758-2024-A05")
 LOG_FILE = os.environ.get("FLASK_LOG", "flask.log")
 open(LOG_FILE, 'w').close()  # Empty log file from previous application runs
 app = Flask(__name__)
@@ -86,9 +88,9 @@ def download_registry_model():
     global model
     # Get POST json data
     json_input = request.get_json()
-    project_name = json_input[0]["project"]
-    model_name = json_input[0]["model"]
-    version = json_input[0]["version"]
+    project_name = json_input["project"]
+    model_name = json_input["model"]
+    version = json_input["version"]
     app.logger.info("download_registry_model request started")
     app.logger.info(json_input)
 
@@ -111,7 +113,7 @@ def download_registry_model():
     # currently loaded model
     else:
         api = wandb.Api()
-        project_path = f"IFT6758-2024-A05/{project_name}"  # Maybe add https://wandb.ai/ before ?
+        project_path = f"{WANDB_ORG}/{project_name}"  # Maybe add https://wandb.ai/ before ?
         artifact_path = f"{project_path}/{model_name}:{version}"
         try:
             artifact = api.artifact(artifact_path)
