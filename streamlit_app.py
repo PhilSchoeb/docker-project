@@ -82,7 +82,7 @@ if st.button("Ping game"):
             period = events_data['live_data']['period']
             home_score = events_data['live_data']['home_score']
             away_score = events_data['live_data']['away_score']
-            xG_home = events_data['live_data']['xG_away']
+            xG_home = events_data['live_data']['xG_home']
             xG_away = events_data['live_data']['xG_away']
 
             if events_df is not None:
