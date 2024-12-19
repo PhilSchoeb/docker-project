@@ -8,10 +8,16 @@ import threading
 import plotly.express as px
 from ift6758.client.serving_client import ServingClient
 from ift6758.client.game_client import GameClient
+import os
+
+GAME_CLIENT_HOST = os.environ.get("GAME_CLIENT_HOST", "127.0.0.1")
+GAME_CLIENT_PORT = os.environ.get("GAME_CLIENT_PORT", "8000").astype(int)
+SERVING_CLIENT_HOST = os.environ.get("SERVING_CLIENT_HOST", "127.0.0.1")
+SERVING_CLIENT_PORT = os.environ.get("SERVING_CLIENT_PORT", "8000").astype(int)
 
 # Initialize serving and game clients
-game_client = GameClient(ip="127.0.0.1", port=8000)
-serving_client = ServingClient(ip="127.0.0.1", port=8000)
+game_client = GameClient(ip=GAME_CLIENT_HOST, port=GAME_CLIENT_PORT)
+serving_client = ServingClient(ip=SERVING_CLIENT_HOST, port=SERVING_CLIENT_PORT)
 
 # config streamlit
 st.set_page_config(
