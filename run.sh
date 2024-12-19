@@ -4,9 +4,11 @@
 set -e
 
 # Container options
-PORT="8000"
+PORT_SERVING="8000"
+PORT_STREAMLIT="8501"
 TAG="latest"
 NAME_SERVING="ift6758-serving"
+NAME_STREAMLIT="ift6758-streamlit"
 
 # Colors for the terminal
 YELLOW='\033[1;33m'
@@ -23,16 +25,29 @@ fi
 
 echo -e "${YELLOW}Stop previous docker containers (if any)${NO_COLOR}"
 docker stop ${NAME_SERVING} || true
+docker stop ${NAME_STREAMLIT} || true
 
 echo -e "${YELLOW}Run the docker containers${NO_COLOR}"
 docker run \
   --rm \
   -d \
-  -p ${PORT}:8000 \
+  -p ${PORT_SERVING}:8000 \
   -e WANDB_API_KEY=${WANDB_API_KEY} \
   -e WANDB_ORG=${WANDB_ORG} \
   --name ${NAME_SERVING} \
   ift6758/serving:${TAG}
 
-echo -e "${GREEN}Serving the model at http://localhost:${PORT}${NO_COLOR}"
+docker run \
+  --rm \
+  -d \
+  -p ${PORT_STREAMLIT}:8501 \
+  -e GAME_CLIENT_HOST="127.0.0.1" \
+  -e GAME_CLIENT_PORT=${PORT_SERVING} \
+  -e SERVING_CLIENT_HOST="127.0.0.1" \
+  -e SERVING_CLIENT_PORT=${PORT_SERVING} \
+  --name ${NAME_STREAMLIT} \
+  ift6758/streamlit:${TAG}
+
+echo -e "${GREEN}Serving the model at http://localhost:${PORT_SERVING}${NO_COLOR}"
+echo -e "${GREEN}Streamlit app running at http://localhost:${PORT_STREAMLIT}${NO_COLOR}"
 

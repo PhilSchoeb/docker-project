@@ -15,6 +15,6 @@ echo -e "${YELLOW}Building Serving image${NO_COLOR}"
 docker build -t ift6758/serving:${TAG} -f Dockerfile.serving .
 
 echo -e "${YELLOW}Building Streamlit image${NO_COLOR}"
-#docker build -t ift6758/streamlit:${TAG} -f Dockerfile.streamlit .
+docker build -t ift6758/streamlit:${TAG} -f Dockerfile.streamlit .
 
 echo -e "${GREEN}Done building images${NO_COLOR}"
