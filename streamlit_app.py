@@ -11,9 +11,9 @@ from ift6758.client.game_client import GameClient
 import os
 
 GAME_CLIENT_HOST = os.environ.get("GAME_CLIENT_HOST", "127.0.0.1")
-GAME_CLIENT_PORT = os.environ.get("GAME_CLIENT_PORT", "8000").astype(int)
+GAME_CLIENT_PORT = os.environ.get("GAME_CLIENT_PORT", "8000")
 SERVING_CLIENT_HOST = os.environ.get("SERVING_CLIENT_HOST", "127.0.0.1")
-SERVING_CLIENT_PORT = os.environ.get("SERVING_CLIENT_PORT", "8000").astype(int)
+SERVING_CLIENT_PORT = os.environ.get("SERVING_CLIENT_PORT", "8000")
 
 # Initialize serving and game clients
 game_client = GameClient(ip=GAME_CLIENT_HOST, port=GAME_CLIENT_PORT)

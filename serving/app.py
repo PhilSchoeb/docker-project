@@ -87,7 +87,7 @@ def download_registry_model():
     """
     global model
     # Get POST json data
-    json_input = request.get_json()
+    json_input = request.get_json()[0]
     project_name = json_input["project"]
     model_name = json_input["model"]
     version = json_input["version"]

@@ -22,9 +22,10 @@ services:
     ports:
       - "8501:8501"
     environment:
-      GAME_CLIENT_HOST: "${GAME_CLIENT_HOST}"
-      GAME_CLIENT_PORT: "${GAME_CLIENT_PORT}"
-      SERVING_CLIENT_HOST: "${SERVING_CLIENT_HOST}"
-      SERVING_CLIENT_PORT: "${SERVING_CLIENT_PORT}"
-
+      GAME_CLIENT_HOST: "serving"
+      GAME_CLIENT_PORT: "8000"
+      SERVING_CLIENT_HOST: "serving"
+      SERVING_CLIENT_PORT: "8000"
+    depends_on:
+      - serving
      
