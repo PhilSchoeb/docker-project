@@ -56,7 +56,9 @@ Use the native Docker Compose command to start the stack.
 docker-compose up -d
 ```
 
-As above, the app will be available at `http://localhost:8000`.
+As above, the serving app will be available at `http://localhost:8000`.
+
+The Streamlit app will be available at `http://localhost:8501`.
 
 #### Rebuild the Docker images
 
