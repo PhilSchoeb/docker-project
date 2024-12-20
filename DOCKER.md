@@ -26,6 +26,12 @@ Use the `run.sh` script to run the Docker containers.
 ./run.sh
 ```
 
+#### Streamlit
+
+The Streamlit app will be available at `http://localhost:8501`.
+
+#### Serving (Flask)
+
 This will start the Flask app on port `8000` (unless you changed the `PORT` in the `.env` file).
 
 The app will be available at `http://localhost:8000`.
