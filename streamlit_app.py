@@ -16,8 +16,8 @@ SERVING_CLIENT_HOST = os.environ.get("SERVING_CLIENT_HOST", "127.0.0.1")
 SERVING_CLIENT_PORT = os.environ.get("SERVING_CLIENT_PORT", "8000")
 
 # Initialize serving and game clients
-game_client = GameClient(ip=GAME_CLIENT_HOST, port=GAME_CLIENT_PORT)
 serving_client = ServingClient(ip=SERVING_CLIENT_HOST, port=SERVING_CLIENT_PORT)
+game_client = GameClient(ip=GAME_CLIENT_HOST, port=GAME_CLIENT_PORT, serving_client=serving_client)
 
 # config streamlit
 st.set_page_config(

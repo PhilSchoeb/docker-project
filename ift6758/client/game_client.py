@@ -17,10 +17,8 @@ from features.preprocess_advanced import preprocess_advanced
 
 logger = logging.getLogger(__name__)
 
-serving_client = ServingClient(ip="127.0.0.1", port=8000)
-
 class GameClient:
-    def __init__(self, ip: str = "0.0.0.0", port: int = 5000):
+    def __init__(self, ip: str = "0.0.0.0", port: int = 5000, serving_client: ServingClient = ServingClient(ip="127.0.0.1", port=8000)):
         self.base_url = f"http://{ip}:{port}"
         logger.info(f"Initializing client; base URL: {self.base_url}")
 
@@ -28,7 +26,7 @@ class GameClient:
         # Initialize an ApiClient instance
         self.api_client = ApiClient()
         self.data_transformer = DataTransformer()
-
+        self.serving_client = serving_client
 
     def download_live_game_events(self, game_id: str = None, features: list =  None):
         """
@@ -92,7 +90,7 @@ class GameClient:
                     events_features = new_events[features]
 
                     # Make predictions on new events for features used by model
-                    events_predictions = serving_client.predict(events_features)
+                    events_predictions = self.serving_client.predict(events_features)
                     
                     # Combine predictions df with all features 
                     events_predictions = pd.merge(new_events, events_predictions, left_index=True, right_index=True, how="inner")
