@@ -28,9 +28,9 @@ st.title("Hockey Visualization App")
 
 # init de WandB
 st.sidebar.header("WandB Configuration")
-workspace = st.sidebar.text_input("Workspace", value = "simple_model_logistic_regression", placeholder="Enter WandB workspace name")
-model = st.sidebar.text_input("Model", value = "goal_distance_regression", placeholder="Enter model name")
-version = st.sidebar.text_input("Version", value = "v0", placeholder="Enter model version")
+workspace = st.sidebar.text_input("Workspace", value="simple_model_logistic_regression", placeholder="Enter WandB workspace name")
+model = st.sidebar.text_input("Model", value="goal_distance_regression", placeholder="Enter model name")
+version = st.sidebar.text_input("Version", value="v0", placeholder="Enter model version")
 
 # Button to load model
 if st.sidebar.button("Get model"):
@@ -54,8 +54,7 @@ elif model == "goal_distance_and_angle_regression":
 if st.button("Ping game"):
 
     try:
-
-        game_data = game_client.download_live_game_information(game_id = game_id)
+        game_data = game_client.download_live_game_information(game_id=game_id)
 
         home_team = game_data['home_team']
         away_team = game_data['away_team']
@@ -72,14 +71,17 @@ if st.button("Ping game"):
 
         st.subheader("Data used for predictions and associated predictions")
 
-        # Placeholder for the events dataframe 
-        events_placeholder = st.empty()
-
         # Initialize an empty dataframe to collect all data
         all_data = pd.DataFrame() 
 
+        # Placeholder for the events dataframe 
+        events_placeholder = st.empty()
+
+        # Placeholder for the top players table
+        top_players_placeholder = st.empty()
+
         # Fetch live game events and process them dynamically
-        for events_data in game_client.download_live_game_events(game_id = game_id, features = required_features):
+        for events_data in game_client.download_live_game_events(game_id=game_id, features=required_features):
 
             events_df = events_data['new_events']
 
@@ -92,12 +94,33 @@ if st.button("Ping game"):
             xG_away = events_data['live_data']['xG_away']
 
             if events_df is not None:
-                # Display columns of interest
-                # prediction_data = events_df[required_features]
-
                 # Update displayed dataframe
                 all_data = pd.concat([all_data, events_df], ignore_index=True)
 
+                # Bonus feature: Update top players by xG dynamically
+                if 'shooting_player_name' in all_data.columns and 'goal_prob' in all_data.columns and 'shooting_player_team_id' in all_data.columns:
+                    top_xg_players = (
+                        all_data.groupby(['shooting_player_name', 'shooting_player_team_id'])['goal_prob']
+                        .sum()
+                        .sort_values(ascending=False)
+                        .reset_index()
+                    )
+                    top_xg_players.columns = ['Player', 'Team', 'Total xG']
+
+                    # Update the top players table dynamically
+                    with top_players_placeholder.container():
+                        st.write("### Top Players by xG")
+                        st.write("""
+                        ### Description of the Added Feature: Top Players by xG
+
+                        We have implemented a dynamic visualization that identifies and updates the top players with the highest expected goals (xG) during the game. This feature processes live game data and aggregates xG values for each player in real-time, showing their total xG alongside their respective teams. 
+
+                        The table updates dynamically as new events are streamed, ensuring that users always have the most accurate and up-to-date information about player performance. This functionality provides insights into individual contributions during the game, which can be valuable for analysts, fans, and coaches.
+
+                        The implementation utilizes placeholders in Streamlit to replace old data with new updates, making it seamless and efficient.
+                        """)
+
+                        st.write(top_xg_players.head(10))
 
             # Update the dataframe dynamically
             with events_placeholder.container():
@@ -125,7 +148,6 @@ if st.button("Ping game"):
                 st.write(f"Period: {period} - {formatted_time}  left: ")
 
             time.sleep(1)
-
 
     except Exception as e:
         st.error(f"An error occurred: {e}")
