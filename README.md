@@ -1,4 +1,4 @@
-# NHL goal prediction engine - Milestone 3 of Data Science course (IFT6758)
+# NHL Goal Prediction Engine - Milestone 3 of Data Science course (IFT6758)
 
 This is the code for the third and final milestone of this project. For this part, we have built a web application using Flask, Streamlit and Docker to use our various models for goal prediction on live games of the NHL. The next section shows how to locally host the application for usage.
 
