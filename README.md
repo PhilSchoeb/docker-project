@@ -1,6 +1,6 @@
 # IFT6758 NHL goal prediction engine - Milestone 3
 
-This is the code for the third and final milestone of this project. For this part, we have built a web application using Flask, Streamlit and Docker to use our various model for goal prediction on live games of the NHL. The next section shows how to locally host the application for usage.
+This is the code for the third and final milestone of this project. For this part, we have built a web application using Flask, Streamlit and Docker to use our various models for goal prediction on live games of the NHL. The next section shows how to locally host the application for usage.
 
 # Run with Docker
 
